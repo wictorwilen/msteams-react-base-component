@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+      "module": "commonjs",
+      "target": "es5",
+      "moduleResolution": "node",
+      "noImplicitAny": false,
+      "strictNullChecks": true,
+      "jsx": "react",
+      "declaration": true,
+      "sourceMap": true,
+      "outDir": "./lib",                      
+      "rootDir": "./src",                     
+    "removeComments": true,
+      "types": [
+        "@microsoft/teams-js"
+      ]
+  
+  }
+}
