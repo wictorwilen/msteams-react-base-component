@@ -82,7 +82,7 @@ export default class TeamsBaseComponent<P extends ITeamsBaseComponentProps, S ex
     /**
      * Updates the theme
      */
-    protected updateTheme = (themeStr: string): void => {
+    protected updateTheme = (themeStr?: string): void => {
         let theme;
         switch (themeStr) {
             case 'dark':
@@ -101,7 +101,7 @@ export default class TeamsBaseComponent<P extends ITeamsBaseComponentProps, S ex
     /**
      * Returns the value of a query variable
      */
-    protected getQueryVariable = (variable: string): string | null => {
+    protected getQueryVariable = (variable: string): string | undefined => {
         const query = window.location.search.substring(1);
         const vars = query.split('&');
         for (const varPairs of vars) {
@@ -110,6 +110,6 @@ export default class TeamsBaseComponent<P extends ITeamsBaseComponentProps, S ex
                 return decodeURIComponent(pair[1]);
             }
         }
-        return null;
+        return undefined;
     }
 }
