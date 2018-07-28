@@ -56,7 +56,10 @@ export default class TeamsBaseComponent<P extends ITeamsBaseComponentProps, S ex
     }
 
 
-    protected pageFontSize = () => {
+    /**
+     * Returns the font size (default 16)
+     */
+    protected pageFontSize = (): number => {
         let sizeStr = window.getComputedStyle(document.getElementsByTagName('html')[0]).getPropertyValue('font-size');
         sizeStr = sizeStr.replace('px', '');
         let fontSize = parseInt(sizeStr, 10);
@@ -65,7 +68,10 @@ export default class TeamsBaseComponent<P extends ITeamsBaseComponentProps, S ex
         }
         return fontSize;
     }
-    protected inTeams = () => {
+    /**
+     * Returns true of if hosted in Teams (in an Iframe)
+     */
+    protected inTeams = (): boolean => {
         try {
             return window.self !== window.top;
         } catch (e) {
@@ -73,7 +79,10 @@ export default class TeamsBaseComponent<P extends ITeamsBaseComponentProps, S ex
         }
     }
 
-    protected updateTheme = (themeStr) => {
+    /**
+     * Updates the theme
+     */
+    protected updateTheme = (themeStr: string): void => {
         let theme;
         switch (themeStr) {
             case 'dark':
@@ -89,7 +98,10 @@ export default class TeamsBaseComponent<P extends ITeamsBaseComponentProps, S ex
         this.setState({ theme });
     }
 
-    protected getQueryVariable = (variable) => {
+    /**
+     * Returns the value of a query variable
+     */
+    protected getQueryVariable = (variable: string): string | null => {
         const query = window.location.search.substring(1);
         const vars = query.split('&');
         for (const varPairs of vars) {
