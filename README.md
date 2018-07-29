@@ -81,3 +81,9 @@ export class MyTab extends TeamsBaseComponent<IMyTapProps, IMyTabState> {
 }
 
 ```
+
+## License
+
+Copyright (c) Wictor Wilén. All rights reserved.
+
+Licensed under the MIT license.
