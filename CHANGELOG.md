@@ -2,8 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/) 
+The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+## [*Unreleased]
+
+### Changed
+
+* Updated code to reflect linting changes
+
+### Added
+
+* Travis-ci integration
+* Linting added (npm run lint)
 
 ## [*0.0.3*] - <*2018-07-28*>
 

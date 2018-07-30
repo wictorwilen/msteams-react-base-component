@@ -6,3 +6,5 @@ npm-shrinkwrap.json
 tsconfig.json
 *.map
 *.spec.js
+.travis.yml
+tslint.json
