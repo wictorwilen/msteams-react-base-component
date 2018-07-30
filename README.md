@@ -1,6 +1,13 @@
 # Microsoft Teams UI Controls base component
 
+[![npm version](https://badge.fury.io/js/msteams-react-base-component.svg)](https://badge.fury.io/js/generator-teams)
+
 This is a base component for Microsoft Teams React based Single Page Applications (SPA), based on the Microsoft Teams UI UI components, which is used when generating Microsoft Teams Apps using the [Microsoft Teams Yeoman Generator](https://aka.ms/yoteams).
+
+ | @master | @preview |
+ :--------:|:---------:
+ [![Build Status](https://travis-ci.org/wictorwilen/msteams-react-base-component.svg?branch=master)](https://travis-ci.org/wictorwilen/msteams-react-base-component)|[![Build Status](https://travis-ci.org/wictorwilen/msteams-react-base-component.svg?branch=preview)](https://travis-ci.org/wictorwilen/msteams-react-base-component)
+
 
 ## Usage
 
