@@ -4,7 +4,7 @@
 import * as React from "react";
 import { render } from "react-dom";
 import { ThemeStyle, ITeamsComponentProps, ITeamsComponentState } from "msteams-ui-components-react";
-
+import * as microsoftTeams from "@microsoft/teams-js";
 /**
  * State interface for the Teams Base user interface React component
  */
