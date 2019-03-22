@@ -47,42 +47,37 @@ export class MyTab extends TeamsBaseComponent<IMyTapProps, IMyTabState> {
     }
 
      public render() {
+         const context = getContext({
+            baseFontSize: this.state.fontSize,
+            style: this.state.theme
+        });
+        const { rem, font } = context;
+        const { sizes, weights } = font;
+        const styles = {
+            header: { ...sizes.title, ...weights.semibold },
+            section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
+            footer: { ...sizes.xsmall }
+        };
         return (
-            <TeamsComponentContext
-                fontSize={this.state.fontSize}
-                theme={this.state.theme}>
-                <ConnectedComponent render={(props) => {
-                    const { context } = props;
-                    const { rem, font } = context;
-                    const { sizes, weights } = font;
-                    const styles = {
-                        header: { ...sizes.title, ...weights.semibold },
-                        section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
-                        footer: { ...sizes.xsmall }
-                    }
-
-                    return (
-                        <Surface>
-                            <Panel>
-                                <PanelHeader>
-                                    <div style={styles.header}>Hello World</div>
-                                </PanelHeader>
-                                <PanelBody>
-                                    <div style={styles.section}>
-                                        HelMy Tab 
-                                    </div>
-                                </PanelBody>
-                                <PanelFooter>
-                                    <div style={styles.footer}>
-                                        (C) Copyright Myself
-                                    </div>
-                                </PanelFooter>
-                            </Panel>
-                        </Surface>
-                    );
-                }}>
-                </ConnectedComponent>
-            </TeamsComponentContext>
+             <TeamsThemeContext.Provider value={context}>
+                <Surface>
+                    <Panel>
+                        <PanelHeader>
+                            <div style={styles.header}>Hello World</div>
+                        </PanelHeader>
+                        <PanelBody>
+                            <div style={styles.section}>
+                                HelMy Tab 
+                            </div>
+                        </PanelBody>
+                        <PanelFooter>
+                            <div style={styles.footer}>
+                                (C) Copyright Myself
+                            </div>
+                        </PanelFooter>
+                    </Panel>
+                </Surface>
+            </TeamsThemeContext.Provider>
         );
     }
 }
