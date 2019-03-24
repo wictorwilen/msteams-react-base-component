@@ -90,7 +90,7 @@ export default class TeamsBaseComponent<P extends ITeamsBaseComponentProps, S ex
      * Updates the theme
      */
     protected updateTheme = (themeStr?: string): void => {
-        let theme;
+        let theme: ThemeStyle;
         switch (themeStr) {
             case "dark":
                 theme = ThemeStyle.Dark;
