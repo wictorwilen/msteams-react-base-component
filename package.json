@@ -1,6 +1,6 @@
 {
   "name": "msteams-react-base-component",
-  "version": "1.1.1",
+  "version": "2.0.0-preview",
   "description": "React helper components for Microsoft Teams apps",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -34,16 +34,15 @@
   "homepage": "https://github.com/wictorwilen/msteams-react-base-component",
   "license": "MIT",
   "devDependencies": {
-    "@microsoft/teams-js": "^1.4.1",
-    "@types/react": "16.8.8",
+    "@microsoft/teams-js": "^1.5.0",
+    "@types/react": "16.8.10",
     "@types/react-dom": "^16.8.4",
     "tslint": "^5.14.0",
     "typescript": "^3.3.4000"
   },
   "dependencies": {
-    "msteams-ui-components-react": "^0.8.1",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "typestyle": "^2.0.1"
+    "@stardust-ui/react": "^0.38.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   }
 }

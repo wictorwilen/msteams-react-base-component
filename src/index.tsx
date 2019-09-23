@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import { render } from "react-dom";
-import { ThemeStyle } from "msteams-ui-components-react";
+import { ThemePrepared, themes } from "@stardust-ui/react";
 import * as microsoftTeams from "@microsoft/teams-js";
 
 /**
@@ -18,7 +18,7 @@ export interface ITeamsBaseComponentState {
     /**
      * The Microsoft Teams theme style (Light, Dark, HighContrast)
      */
-    theme: ThemeStyle;
+    theme: ThemePrepared;
 }
 
 /**
@@ -90,17 +90,17 @@ export default class TeamsBaseComponent<P extends ITeamsBaseComponentProps, S ex
      * Updates the theme
      */
     protected updateTheme = (themeStr?: string): void => {
-        let theme: ThemeStyle;
+        let theme: ThemePrepared;
         switch (themeStr) {
             case "dark":
-                theme = ThemeStyle.Dark;
+                theme = themes.teamsDark;
                 break;
             case "contrast":
-                theme = ThemeStyle.HighContrast;
+                theme = themes.teamsHighContrast;
                 break;
             case "default":
             default:
-                theme = ThemeStyle.Light;
+                theme = themes.teams;
         }
         this.setState({ theme });
     }

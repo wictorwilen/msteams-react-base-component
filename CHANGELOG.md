@@ -5,14 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*]
+
+### Changes
+
+* Replaced `msteams-ui-components-react` with `@startdust-ui\react`
+* Updated dependecies (`@microsoft/teams-js` & `msteams-ui-components-react`)
+
 ## [*1.1.1*] - <*2019-04-17*>
 
 ### Fixes
+
 * Fixed an issue with React typings version
 
 ## [*1.1.0*] - <*2019-03-24*>
 
 ### Changed
+
 * Updated Typescript, React, teams-js and msteams-ui-components-react libraries
 
 ## [*1.0.0*] - <*2018-08-13*>
