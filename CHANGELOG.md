@@ -7,10 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [*Unreleased*]
 
-### Changes
+### Changed
 
 * Replaced `msteams-ui-components-react` with `@fluentui\react`
 * Updated dependecies (`@microsoft/teams-js` & `msteams-ui-components-react`)
+* Refactored packages into `peerDependencies`
 
 ## [*1.1.1*] - <*2019-04-17*>
 

@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es2015",
+    "target": "es5",
+    "lib": [
+      "ES5",
+      "ES2015",
+      "DOM"
+    ],
     "moduleResolution": "node",
     "noImplicitAny": false,
     "strictNullChecks": true,
