@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es5",
+    "target": "es2015",
     "moduleResolution": "node",
     "noImplicitAny": false,
     "strictNullChecks": true,

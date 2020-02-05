@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import { render } from "react-dom";
-import { ThemePrepared, themes } from "@stardust-ui/react";
+import { ThemePrepared, themes } from "@fluentui/react";
 import * as microsoftTeams from "@microsoft/teams-js";
 
 /**

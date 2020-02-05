@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changes
 
-* Replaced `msteams-ui-components-react` with `@startdust-ui\react`
+* Replaced `msteams-ui-components-react` with `@fluentui\react`
 * Updated dependecies (`@microsoft/teams-js` & `msteams-ui-components-react`)
 
 ## [*1.1.1*] - <*2019-04-17*>

@@ -1,6 +1,6 @@
 {
   "name": "msteams-react-base-component",
-  "version": "2.0.0-preview",
+  "version": "2.0.0-preview2",
   "description": "React helper components for Microsoft Teams apps",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -41,7 +41,7 @@
     "typescript": "^3.3.4000"
   },
   "dependencies": {
-    "@stardust-ui/react": "^0.38.1",
+    "@fluentui/react": "^0.43.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   }
