@@ -20,6 +20,7 @@ jobs:
       node_js: stable
       deploy:
         - provider: npm
+          edge: true
           email: "wictor@wictorwilen.se"
           api_key:
             secure: UJfaKu3SX+4Fv2ll5SCb3YT/ibEjgMjjuYpTAku7PuuOjimWkjdCNxqeh0qJp5Rf/BQS9RZLQJPacSLH9fmwtAB0LWx/VwfhpOTNTgRvKLPnGImiICD8Sd1axhfCDMXHHuMd3QYrNJY+ZtXzcr1FtTgFl+mHvKY+NEZEyjjTT8KLuCTlXcjrfQTib6E8r/sut+OaozdGWzM3c2UaOPAUjdWt5XOh7YZEZKvS6Tj+6ympwKRQe9gxZv/nwkeHT2zb4ycPJtsPqSwyAhE+4I9qPgF3+MoIeDIzDz5DiJImccPxtxeuBUuCf7Mqy4prwz6FT9QAuIDEtro1oDlBmgj8HIqJCEwlMzvqCRxzoh2eiE/GUYB8inycBpEvzz6biQeLAHnOks/eGZrrTGWbS00h+tRylT36PCkZjTqo4KfEK7iRBbxC7DKeMJ1nU5JxMgmyh80XCGWlPN1QRvETp8bL5nNFrm6OdMYuko4OmSDN2vzXESAy3tU6EHMd1xsvlgENrq9ubrSHUnVNZiIYqisB0lifXnxejahepb0PTk9avRI2R8wr4pXBWqbmk1U80toeUYkaQLHn52uSj0x9KyGhfFsrJ5ZVFslgY1yNHojchhJ9UGixaa+FjBEAKe/W8FoeeIMppQ+b7tUzWtM1prjXAV3sW0rUsLypA3Pijw0//+Q=
@@ -28,6 +29,7 @@ jobs:
           on:
             branch: preview
         - provider: npm
+          edge: true
           email: "wictor@wictorwilen.se"
           api_key:
             secure: UJfaKu3SX+4Fv2ll5SCb3YT/ibEjgMjjuYpTAku7PuuOjimWkjdCNxqeh0qJp5Rf/BQS9RZLQJPacSLH9fmwtAB0LWx/VwfhpOTNTgRvKLPnGImiICD8Sd1axhfCDMXHHuMd3QYrNJY+ZtXzcr1FtTgFl+mHvKY+NEZEyjjTT8KLuCTlXcjrfQTib6E8r/sut+OaozdGWzM3c2UaOPAUjdWt5XOh7YZEZKvS6Tj+6ympwKRQe9gxZv/nwkeHT2zb4ycPJtsPqSwyAhE+4I9qPgF3+MoIeDIzDz5DiJImccPxtxeuBUuCf7Mqy4prwz6FT9QAuIDEtro1oDlBmgj8HIqJCEwlMzvqCRxzoh2eiE/GUYB8inycBpEvzz6biQeLAHnOks/eGZrrTGWbS00h+tRylT36PCkZjTqo4KfEK7iRBbxC7DKeMJ1nU5JxMgmyh80XCGWlPN1QRvETp8bL5nNFrm6OdMYuko4OmSDN2vzXESAy3tU6EHMd1xsvlgENrq9ubrSHUnVNZiIYqisB0lifXnxejahepb0PTk9avRI2R8wr4pXBWqbmk1U80toeUYkaQLHn52uSj0x9KyGhfFsrJ5ZVFslgY1yNHojchhJ9UGixaa+FjBEAKe/W8FoeeIMppQ+b7tUzWtM1prjXAV3sW0rUsLypA3Pijw0//+Q=
