@@ -19,16 +19,7 @@ Example of usage:
 
 ```  TypeScript
 import * as React from 'react';
-import {
-    TeamsComponentContext,
-    ConnectedComponent,
-    Panel,
-    PanelBody,
-    PanelHeader,
-    PanelFooter,
-    Surface
-} from 'msteams-ui-components-react';
-import { render } from 'react-dom';
+import { Provider, Flex, Text, Button, Header } from "@fluentui/react";
 import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
 import * as microsoftTeams from '@microsoft/teams-js';
 
@@ -51,37 +42,26 @@ export class MyTab extends TeamsBaseComponent<IMyTapProps, IMyTabState> {
     }
 
      public render() {
-         const context = getContext({
-            baseFontSize: this.state.fontSize,
-            style: this.state.theme
-        });
-        const { rem, font } = context;
-        const { sizes, weights } = font;
-        const styles = {
-            header: { ...sizes.title, ...weights.semibold },
-            section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
-            footer: { ...sizes.xsmall }
-        };
         return (
-             <TeamsThemeContext.Provider value={context}>
-                <Surface>
-                    <Panel>
-                        <PanelHeader>
-                            <div style={styles.header}>Hello World</div>
-                        </PanelHeader>
-                        <PanelBody>
-                            <div style={styles.section}>
-                                HelMy Tab 
+             <Provider theme={this.state.theme}>
+                <Flex fill={true} column styles={{
+                    padding: ".8rem 0 .8rem .5rem"
+                }}>
+                    <Flex.Item>
+                        <Header content="This is your tab" />
+                    </Flex.Item>
+                    <Flex.Item>
+                        <div>
+                            <div>
+                                <Text content={this.state.entityId} />
                             </div>
-                        </PanelBody>
-                        <PanelFooter>
-                            <div style={styles.footer}>
-                                (C) Copyright Myself
+                            <div>
+                                <Button onClick={() => alert("It worked!")}>A sample button</Button>
                             </div>
-                        </PanelFooter>
-                    </Panel>
-                </Surface>
-            </TeamsThemeContext.Provider>
+                        </div>
+                    </Flex.Item>
+                </Flex>
+            </Provider>
         );
     }
 }

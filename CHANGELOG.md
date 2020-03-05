@@ -5,12 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [*Unreleased*]
+## [*2.0.0*] - <*2020-03-05*>
 
 ### Changed
 
 * Replaced `msteams-ui-components-react` with `@fluentui\react`
-* Updated dependecies (`@microsoft/teams-js` & `msteams-ui-components-react`)
+* Updated dependecies (`@microsoft/teams-js`)
 * Refactored packages into `peerDependencies`
 
 ## [*1.1.1*] - <*2019-04-17*>
