@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased]
+
+### Changed
+
+* Switched to `eslint` and removed `tslint`
+* Switched to *renamed pacakge* `@fluentui/react-northstar`
+
+### Deleted
+
+* Removed unnecessary constructor
+* Removed `fontSize` from state
+* Removed `pageFontSize` protected method
+
 ## [*2.0.0*] - <*2020-03-05*>
 
 ### Changed

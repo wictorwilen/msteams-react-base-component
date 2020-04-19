@@ -3,18 +3,13 @@
 
 import * as React from "react";
 import { render } from "react-dom";
-import { ThemePrepared, themes } from "@fluentui/react";
+import { ThemePrepared, themes } from "@fluentui/react-northstar";
 import * as microsoftTeams from "@microsoft/teams-js";
 
 /**
  * State interface for the Teams Base user interface React component
  */
 export interface ITeamsBaseComponentState {
-    /**
-     * The font size
-     */
-    fontSize: number;
-
     /**
      * The Microsoft Teams theme style (Light, Dark, HighContrast)
      */
@@ -40,16 +35,7 @@ export default class TeamsBaseComponent<P extends ITeamsBaseComponentProps, S ex
      * @param props Properties
      */
     public static render<P extends ITeamsBaseComponentProps>(element: HTMLElement, props: P) {
-        render(React.createElement(this, props), element);
-    }
-
-    /**
-     * Constructor
-     * @param props Properties
-     * @param state State
-     */
-    constructor(props: P, state: S) {
-        super(props, state);
+        return render(React.createElement(this, props), element);
     }
 
     /**
@@ -60,19 +46,6 @@ export default class TeamsBaseComponent<P extends ITeamsBaseComponentProps, S ex
         if (microsoftTeams) {
             microsoftTeams.settings.setValidityState(val);
         }
-    }
-
-    /**
-     * Returns the font size (default 16)
-     */
-    protected pageFontSize = (): number => {
-        let sizeStr = window.getComputedStyle(document.getElementsByTagName("html")[0]).getPropertyValue("font-size");
-        sizeStr = sizeStr.replace("px", "");
-        let fontSize = parseInt(sizeStr, 10);
-        if (!fontSize) {
-            fontSize = 16;
-        }
-        return fontSize;
     }
 
     /**
