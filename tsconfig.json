@@ -3,11 +3,20 @@
     "module": "commonjs",
     "target": "es5",
     "lib": [
-      "ES5",
-      "ES2015",
-      "DOM"
+      "dom",
+      "dom.iterable",
+      "esnext"
     ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
     "noImplicitAny": false,
     "strictNullChecks": true,
     "noImplicitReturns": true,
@@ -18,10 +27,6 @@
     "declaration": true,
     "sourceMap": true,
     "outDir": "./lib",
-    "rootDir": "./src",
     "removeComments": false,
-    "types": [
-      "@microsoft/teams-js"
-    ]
   }
 }

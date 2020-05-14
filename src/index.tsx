@@ -3,7 +3,8 @@
 
 import * as React from "react";
 import { render } from "react-dom";
-import { ThemePrepared, themes } from "@fluentui/react-northstar";
+import { themes } from "@fluentui/react-northstar";
+import { ThemePrepared } from "@fluentui/styles";
 import * as microsoftTeams from "@microsoft/teams-js";
 
 /**
@@ -13,20 +14,13 @@ export interface ITeamsBaseComponentState {
     /**
      * The Microsoft Teams theme style (Light, Dark, HighContrast)
      */
-    theme: ThemePrepared;
-}
-
-/**
- * Properties interface for the Teams Base user interface React component
- */
-export interface ITeamsBaseComponentProps {
-
+    theme: ThemePrepared<any>;
 }
 
 /**
  * Base implementation of the React based interface for the Microsoft Teams app
  */
-export default class TeamsBaseComponent<P extends ITeamsBaseComponentProps, S extends ITeamsBaseComponentState>
+export default class TeamsBaseComponent<P, S extends ITeamsBaseComponentState>
     extends React.Component<P, S> {
 
     /**
@@ -34,36 +28,33 @@ export default class TeamsBaseComponent<P extends ITeamsBaseComponentProps, S ex
      * @param element DOM element to render the control in
      * @param props Properties
      */
-    public static render<P extends ITeamsBaseComponentProps>(element: HTMLElement, props: P) {
+    public static render<P>(element: HTMLElement, props: P) {
         return render(React.createElement(this, props), element);
     }
 
     /**
-     * Sets the validity state
-     * @param val validity
+     * Returns true of if hosted in Teams, if not hosted in Teams there is a one second delay until response
      */
-    public setValidityState(val: boolean) {
-        if (microsoftTeams) {
-            microsoftTeams.settings.setValidityState(val);
-        }
-    }
-
-    /**
-     * Returns true of if hosted in Teams (in an Iframe)
-     */
-    protected inTeams = (): boolean => {
-        try {
-            return window.self !== window.top;
-        } catch (e) {
-            return true;
-        }
+    protected inTeams = (): Promise<boolean> => {
+        return new Promise((resolve, reject) => {
+            try {
+                microsoftTeams.initialize(() => {
+                    resolve(true);
+                });
+                setTimeout(() => {
+                    resolve(false);
+                }, 1000);
+            } catch (e) {
+                reject(e);
+            }
+        });
     }
 
     /**
      * Updates the theme
      */
     protected updateTheme = (themeStr?: string): void => {
-        let theme: ThemePrepared;
+        let theme: ThemePrepared<any>;
         switch (themeStr) {
             case "dark":
                 theme = themes.teamsDark;

@@ -11,18 +11,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Switched to `eslint` and removed `tslint`
 * Switched to *renamed pacakge* `@fluentui/react-northstar`
+* Breaking change, `inTeams()` now returns a `Promise<Boolean>`
 
 ### Deleted
 
 * Removed unnecessary constructor
 * Removed `fontSize` from state
 * Removed `pageFontSize` protected method
+* Removed the property interface
+* Removed the `setValidityState` method
 
 ## [*2.0.0*] - <*2020-03-05*>
 
 ### Changed
 
-* Replaced `msteams-ui-components-react` with `@fluentui\react`
+* Replaced `msteams-ui-components-react` with `@fluentui/react`
 * Updated dependecies (`@microsoft/teams-js`)
 * Refactored packages into `peerDependencies`
 
