@@ -1,6 +1,6 @@
 {
   "name": "msteams-react-base-component",
-  "version": "2.1.0-preview2",
+  "version": "2.1.0-preview3",
   "description": "React helper components for Microsoft Teams apps",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
