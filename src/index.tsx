@@ -33,9 +33,11 @@ export default class TeamsBaseComponent<P, S extends ITeamsBaseComponentState>
     }
 
     /**
-     * Returns true of if hosted in Teams, if not hosted in Teams there is a one second delay until response
+     * Returns true if hosted in Teams
+     * @param timeout timeout in milliseconds, default = 1000
+     * @returns a `Promise<boolean>`
      */
-    protected inTeams = (): Promise<boolean> => {
+    protected inTeams = (timeout: number = 1000): Promise<boolean> => {
         return new Promise((resolve, reject) => {
             try {
                 microsoftTeams.initialize(() => {
@@ -43,7 +45,7 @@ export default class TeamsBaseComponent<P, S extends ITeamsBaseComponentState>
                 });
                 setTimeout(() => {
                     resolve(false);
-                }, 1000);
+                }, timeout);
             } catch (e) {
                 reject(e);
             }

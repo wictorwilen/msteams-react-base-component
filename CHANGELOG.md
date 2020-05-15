@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Switched to `eslint` and removed `tslint`
 * Switched to *renamed pacakge* `@fluentui/react-northstar`
-* Breaking change, `inTeams()` now returns a `Promise<Boolean>`
+* Breaking change, `inTeams(timeout:number=1000)` now returns a `Promise<Boolean>`
 
 ### Deleted
 

@@ -19,7 +19,7 @@
     "allowUnreachableCode": false,
     "jsx": "react",
     "declaration": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "outDir": "./lib",
     "rootDir": "./src",
     "removeComments": false
