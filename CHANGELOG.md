@@ -5,13 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [*Unreleased]
+## [*2.1.0] - <*2020-05-17*>
 
 ### Changed
 
+* Breaking change, `inTeams(timeout:number=1000)` now returns a `Promise<Boolean>`
 * Switched to `eslint` and removed `tslint`
 * Switched to *renamed pacakge* `@fluentui/react-northstar`
-* Breaking change, `inTeams(timeout:number=1000)` now returns a `Promise<Boolean>`
 
 ### Deleted
 
