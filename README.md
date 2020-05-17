@@ -12,7 +12,6 @@ This is a base component for Microsoft Teams React based Single Page Application
  :--------:|:---------:
  [![Build Status](https://travis-ci.org/wictorwilen/msteams-react-base-component.svg?branch=master)](https://travis-ci.org/wictorwilen/msteams-react-base-component)|[![Build Status](https://travis-ci.org/wictorwilen/msteams-react-base-component.svg?branch=preview)](https://travis-ci.org/wictorwilen/msteams-react-base-component)
 
-
 ## Usage
 
 Example of usage:
@@ -27,7 +26,7 @@ export interface IMyTabState extends ITeamsBaseComponentState {
     property: string;
 }
 
-export interface IMyTabConfigProps extends ITeamsBaseComponentProps {
+export interface IMyTabConfigProps {
 }
 
 export class MyTab extends TeamsBaseComponent<IMyTapProps, IMyTabState> {
