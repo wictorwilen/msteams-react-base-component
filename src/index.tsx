@@ -1,9 +1,10 @@
 // Copyright (c) Wictor Wilén. All rights reserved.
 // Licensed under the MIT license.
+// SPDX-License-Identifier: MIT
 
 import * as React from "react";
 import { render } from "react-dom";
-import { themes } from "@fluentui/react-northstar";
+import { teamsTheme, teamsDarkTheme, teamsHighContrastTheme } from "@fluentui/react-northstar";
 import { ThemePrepared } from "@fluentui/styles";
 import * as microsoftTeams from "@microsoft/teams-js";
 
@@ -59,14 +60,14 @@ export default class TeamsBaseComponent<P, S extends ITeamsBaseComponentState>
         let theme: ThemePrepared<any>;
         switch (themeStr) {
             case "dark":
-                theme = themes.teamsDark;
+                theme = teamsDarkTheme;
                 break;
             case "contrast":
-                theme = themes.teamsHighContrast;
+                theme = teamsHighContrastTheme;
                 break;
             case "default":
             default:
-                theme = themes.teams;
+                theme = teamsTheme;
         }
         this.setState({ theme });
     }

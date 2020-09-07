@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*]
+
+### Changed
+
+* Updated `@microsoft/teams-js` to version `1.7.0`
+* Updated `@fluentui/react-northstar` to version `0.51.0`.
+
 ## [*2.1.0*] - <*2020-05-17*>
 
 ### Changed
