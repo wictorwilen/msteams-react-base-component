@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-* Updated `@microsoft/teams-js` to version `1.7.0`
-* Updated `@fluentui/react-northstar` to version `0.51.0`.
+* Updated `@microsoft/teams-js` to version `^1.8.0`
+* Updated `@fluentui/react-northstar` to version `^0.51.0`.
 
 ## [*2.1.0*] - <*2020-05-17*>
 
