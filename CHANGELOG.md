@@ -5,7 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [*Unreleased*]
+## [*2.2.0*] - <*2020-10-27*>
+
+### Added
 
 * Added `esm` module version of the package (#5)
 
@@ -20,7 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Breaking change, `inTeams(timeout:number=1000)` now returns a `Promise<Boolean>`
 * Switched to `eslint` and removed `tslint`
-* Switched to *renamed pacakge* `@fluentui/react-northstar`
+* Switched to *renamed package* `@fluentui/react-northstar`
 
 ### Deleted
 
