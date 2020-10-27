@@ -20,7 +20,7 @@
     "jsx": "react",
     "declaration": true,
     "sourceMap": false,
-    "outDir": "./lib",
+    "outDir": "./lib/cjs",
     "rootDir": "./src",
     "removeComments": false
   }

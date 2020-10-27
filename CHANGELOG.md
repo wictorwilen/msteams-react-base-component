@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [*Unreleased*]
 
+* Added `esm` module version of the package (#5)
+
 ### Changed
 
 * Updated `@microsoft/teams-js` to version `^1.8.0`
