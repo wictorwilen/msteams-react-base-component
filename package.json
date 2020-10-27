@@ -2,13 +2,14 @@
   "name": "msteams-react-base-component",
   "version": "2.1.0",
   "description": "React helper components for Microsoft Teams apps",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
+  "types": "lib/cjs/index.d.ts",
   "scripts": {
     "prepublishOnly ": "npm run clean && npm run build",
-    "build": "node_modules/.bin/tsc -p .",
-    "clean": "rm -rf lib",
-    "lint": "./node_modules/.bin/eslint ./src/**/*.tsx"
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.es.json",
+    "clean": "rimraf lib",
+    "lint": "eslint ./src/**/*.tsx"
   },
   "keywords": [
     "react",
@@ -50,6 +51,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "rimraf": "^3.0.2",
     "typescript": "^3.9.2"
   },
   "dependencies": {},
