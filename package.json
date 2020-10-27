@@ -57,7 +57,7 @@
   "dependencies": {},
   "peerDependencies": {
     "@fluentui/react-northstar": "^0.51.0",
-    "@microsoft/teams-js": "^1.7.0",
+    "@microsoft/teams-js": "^1.8.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   }
