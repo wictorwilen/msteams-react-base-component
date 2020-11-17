@@ -67,7 +67,7 @@ export function useTeams(options?: { initialTheme?: string }): [{ inTeams: boole
                     microsoftTeams.getContext(context => {
                         setContext(context);
                         setFullScreen(context.isFullScreen);
-                        updater(context.theme);
+                        themeChangeHandler(context.theme);
                     });
                     microsoftTeams.registerFullScreenHandler((isFullScreen) => {
                         setFullScreen(isFullScreen);
