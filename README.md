@@ -6,7 +6,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/wictorwilen/msteams-react-base-component.svg)](https://github.com/wictorwilen/msteams-react-base-component/issues)
 [![GitHub closed issues](https://img.shields.io/github/issues-closed/wictorwilen/msteams-react-base-component.svg)](https://github.com/wictorwilen/msteams-react-base-component/issues?q=is%3Aissue+is%3Aclosed) 
 
-This is a base component for Microsoft Teams React based Single Page Applications (SPA), based on the Microsoft Teams UI UI components, which is used when generating Microsoft Teams Apps using the [Microsoft Teams Yeoman Generator](https://aka.ms/yoteams).
+This is a React hook based on the Microsoft Teams JavaScript SDK and the Fluent UI components, which is used when generating Microsoft Teams Apps using the [Microsoft Teams Yeoman Generator](https://aka.ms/yoteams).
 
  | @master | @preview |
  :--------:|:---------:
@@ -17,54 +17,38 @@ This is a base component for Microsoft Teams React based Single Page Application
 Example of usage:
 
 ```  TypeScript
-import * as React from 'react';
-import { Provider, Flex, Text, Button, Header } from "@fluentui/react";
-import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
-import * as microsoftTeams from '@microsoft/teams-js';
+import * as React from "react";
+import { Provider, Flex, Header } from "@fluentui/react-northstar";
+import { useState, useEffect } from "react";
+import { useTeams } from "msteams-react-base-component";
 
-export interface IMyTabState extends ITeamsBaseComponentState {
-    property: string;
-}
+/**
+ * Implementation of the hooks Tab content page
+ */
+export const HooksTab = () => {
+    const [{ inTeams, theme }] = useTeams({});
+    const [message, setMessage] = useState("Loading...");
 
-export interface IMyTabConfigProps {
-}
+    useEffect(() => {
+        if (inTeams === true) {
+            setMessage("In Microsoft Teams!");
+        } else {
+            if (inTeams !== undefined) {
+                setMessage("Not in Microsoft Teams");
+            }
+        }
+    }, [inTeams]);
 
-export class MyTab extends TeamsBaseComponent<IMyTapProps, IMyTabState> {
-    public componentWillMount() {
-        this.updateTheme(this.getQueryVariable('theme'));
-        this.setState({
-            fontSize: this.pageFontSize()
-        });
-
-        microsoftTeams.initialize();
-        microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
-    }
-
-     public render() {
-        return (
-             <Provider theme={this.state.theme}>
-                <Flex fill={true} column styles={{
-                    padding: ".8rem 0 .8rem .5rem"
-                }}>
-                    <Flex.Item>
-                        <Header content="This is your tab" />
-                    </Flex.Item>
-                    <Flex.Item>
-                        <div>
-                            <div>
-                                <Text content={this.state.entityId} />
-                            </div>
-                            <div>
-                                <Button onClick={() => alert("It worked!")}>A sample button</Button>
-                            </div>
-                        </div>
-                    </Flex.Item>
-                </Flex>
-            </Provider>
-        );
-    }
-}
-
+    return (
+        <Provider theme={theme}>
+            <Flex fill={true}>
+                <Flex.Item>
+                    <Header content={message} />
+                </Flex.Item>
+            </Flex>
+        </Provider>
+    );
+};
 ```
 
 ## License
