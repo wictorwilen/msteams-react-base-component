@@ -13,6 +13,11 @@ jobs:
         registry-url: 'https://registry.npmjs.org'
     - run: npm install
     - run: npm run build
-    - run: npm publish
+    - name: Publish release
+      if: contains(github.ref, 'master')
+      run: npm publish
+    - name: Publish preview
+      if: contains(github.ref, 'preview')
+      run: npm publish --tag preview
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
