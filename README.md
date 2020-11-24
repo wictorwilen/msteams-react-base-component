@@ -14,6 +14,42 @@ This is a React hook based on the Microsoft Teams JavaScript SDK and the Fluent 
 
 ## Usage
 
+To use this package in a Teams tab or extension import the `useTeams` Hook and then call it inside a functional component.
+
+``` TypeScript
+const [{inTeams}] = useTeams();
+```
+
+The `useTeams` hook will return a tuple of where an object of properties are in the first field and an object of methods in the second.
+
+> **NOTE**: using the hook will automatically call `microsoftTeams.initialize()` and ` microsoftTeams.getContext()` if the Microsoft Teams JS SDK is available.
+
+### useTeams Hook arguments
+
+The `useTeams` hook can take an *optional* object argument:
+
+| Argument | Description |
+|----------|-------------|
+| `initialTheme` | Manually set the initial theme (`default`, `dark` or `contrast`) |
+
+### Available properties
+
+| Property name | Type | Description |
+|---------------|------|-------------|
+| `inTeams` | boolean? | `true` if hosted in Teams and `false` for outside of Microsoft Teams |
+| `fullScreen` | boolean? | `true` if the Tab is in full-screen, otherwise `false` |
+| `themeString` | string | The value of `default`, `dark` or `contrast` |
+| `theme` | ThemePrepared | The Fluent UI Theme object for the current theme |
+| `context` | `microsoftTeams.Context?` | `undefined` while the Tab is loading or if not hosted in Teams, set to a value once the Tab is initialized and context available |
+
+### Available methods
+
+| Method name | Description |
+|-------------|-------------|
+| `setTheme(theme?: string)` | Method for manually setting the theme |
+
+## Full example
+
 Example of usage:
 
 ```  TypeScript
@@ -50,7 +86,6 @@ export const HooksTab = () => {
     );
 };
 ```
-
 ## License
 
 Copyright (c) Wictor Wilén. All rights reserved.

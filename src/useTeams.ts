@@ -38,15 +38,34 @@ const getQueryVariable = (variable: string): string | undefined => {
  * Microsoft Teams React hook
  * @param options optional options
  * @returns A tuple with properties and methods
+ * properties:
+ *  - inTeams: boolean = true if inside Microsoft Teams
+ *  - fullscreen: boolean = true if in full screen mode
+ *  - theme: Fluent UI Theme
+ *  - themeString: string - representation of the theme (default, dark or contrast)
+ *  - context - the Microsoft Teams JS SDK context
+ * methods:
+ *  - setTheme - manually set the theme
  */
-export function useTeams(options?: { initialTheme?: string }): [{ inTeams: boolean, fullScreen?: boolean, theme: ThemePrepared, context?: microsoftTeams.Context }, { setTheme: (theme: string | undefined) => void }] {
+export function useTeams(options?: { initialTheme?: string }): [
+    {
+        inTeams: boolean,
+        fullScreen?: boolean,
+        theme: ThemePrepared,
+        themeString: string,
+        context?: microsoftTeams.Context
+    }, {
+        setTheme: (theme: string | undefined) => void
+    }] {
     const [inTeams, setInTeams] = useState<boolean>(false);
     const [fullScreen, setFullScreen] = useState<boolean | undefined>(undefined);
     const [theme, setTheme] = useState<ThemePrepared>(teamsTheme);
+    const [themeString, setThemeString] = useState<string>("default");
     const [initialTheme] = useState<string | undefined>((options && options.initialTheme) ? options.initialTheme : getQueryVariable("theme"));
     const [context, setContext] = useState<microsoftTeams.Context>();
 
     const themeChangeHandler = (theme: string | undefined) => {
+        setThemeString(theme || "default");
         switch (theme) {
             case "dark":
                 setTheme(teamsDarkTheme);
@@ -82,5 +101,5 @@ export function useTeams(options?: { initialTheme?: string }): [{ inTeams: boole
         themeChangeHandler(initialTheme);
     }, [initialTheme]);
 
-    return [{ inTeams, fullScreen, theme, context }, { setTheme: themeChangeHandler }];
+    return [{ inTeams, fullScreen, theme, context, themeString }, { setTheme: themeChangeHandler }];
 }
