@@ -2,4 +2,4 @@
 // Licensed under the MIT license.
 // SPDX-License-Identifier: MIT
 
-export { useTeams } from "./useTeams";
+export { useTeams, getQueryVariable, checkInTeams } from "./useTeams";

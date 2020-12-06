@@ -86,6 +86,15 @@ export const HooksTab = () => {
     );
 };
 ```
+
+### Additional helper methods
+
+The package also exports two helper methods, both used internally by the `useTeams` hook.
+
+`getQueryVariable(name: string): string` - returns the value of the query string variable identified by the name.
+
+`checkInTeams(): boolean` - returns true if hosted inside Microsoft Teams.
+
 ## License
 
 Copyright (c) Wictor Wilén. All rights reserved.

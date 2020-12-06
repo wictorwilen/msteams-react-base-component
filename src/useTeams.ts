@@ -22,7 +22,7 @@ export const checkInTeams = (): boolean => {
     return false;
 };
 
-const getQueryVariable = (variable: string): string | undefined => {
+export const getQueryVariable = (variable: string): string | undefined => {
     const query = window.location.search.substring(1);
     const vars = query.split("&");
     for (const varPairs of vars) {
