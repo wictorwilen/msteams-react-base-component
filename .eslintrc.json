@@ -25,18 +25,31 @@
     },
     "plugins": [
         "react",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "react-hooks"
     ],
     "rules": {
         "object-shorthand": 2,
-        "quotes": ["error", "double"],
-        "semi": ["error", "always"],
-        "indent": ["error", 4 ,{
-            "SwitchCase": 1
-        }],
-        "space-before-function-paren":"off",
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "indent": [
+            "error",
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "space-before-function-paren": "off",
         "space-in-parens": "off",
         "padded-blocks": "off",
-        "no-unused-vars": "off"
+        "no-unused-vars": "off",
+        "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+        "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
     }
 }

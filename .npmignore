@@ -1,11 +1,14 @@
+.github
 .vscode
 node_modules
 src
 .gitignore
 npm-shrinkwrap.json
 tsconfig.json
+tsconfig.es.json
 *.map
 *.spec.js
 .travis.yml
 tslint.json
 .eslintrc.json
+.npmrc
