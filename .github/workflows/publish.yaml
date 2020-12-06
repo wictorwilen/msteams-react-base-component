@@ -14,7 +14,7 @@ jobs:
     - run: npm install
     - run: npm run build
     - name: Publish release
-      if: contains(github.ref, 'master')
+      if: "!contains(github.ref, 'preview')"
       run: npm publish
     - name: Publish preview
       if: contains(github.ref, 'preview')
