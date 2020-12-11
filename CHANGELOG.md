@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*] - <**>
+
+### Changes
+
+* `inTeams` is `undefined` by default
+* Optimized the hook to reduce the number of renders of the component using the hook
+
 ## [*3.0.0*] - <*2020-12-06*>
 
 ### Added

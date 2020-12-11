@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import { useEffect, useState } from "react";
+import { unstable_batchedUpdates as batchedUpdates } from "react-dom";
 import * as microsoftTeams from "@microsoft/teams-js";
 import { teamsDarkTheme, teamsHighContrastTheme, teamsTheme, ThemePrepared } from "@fluentui/react-northstar";
 
@@ -49,7 +50,7 @@ export const getQueryVariable = (variable: string): string | undefined => {
  */
 export function useTeams(options?: { initialTheme?: string }): [
     {
-        inTeams: boolean,
+        inTeams?: boolean,
         fullScreen?: boolean,
         theme: ThemePrepared,
         themeString: string,
@@ -57,7 +58,7 @@ export function useTeams(options?: { initialTheme?: string }): [
     }, {
         setTheme: (theme: string | undefined) => void
     }] {
-    const [inTeams, setInTeams] = useState<boolean>(false);
+    const [inTeams, setInTeams] = useState<boolean | undefined>(undefined);
     const [fullScreen, setFullScreen] = useState<boolean | undefined>(undefined);
     const [theme, setTheme] = useState<ThemePrepared>(teamsTheme);
     const [themeString, setThemeString] = useState<string>("default");
@@ -78,28 +79,33 @@ export function useTeams(options?: { initialTheme?: string }): [
                 setTheme(teamsTheme);
         }
     };
-    useEffect(() => {
-        if (checkInTeams()) {
-            setInTeams(true);
-            if (inTeams) {
-                microsoftTeams.initialize(() => {
-                    microsoftTeams.getContext(context => {
-                        setContext(context);
-                        setFullScreen(context.isFullScreen);
-                        themeChangeHandler(context.theme);
-                    });
-                    microsoftTeams.registerFullScreenHandler((isFullScreen) => {
-                        setFullScreen(isFullScreen);
-                    });
-                    microsoftTeams.registerOnThemeChangeHandler(themeChangeHandler);
-                });
-            }
-        }
-    }, [inTeams]);
 
     useEffect(() => {
-        themeChangeHandler(initialTheme);
-    }, [initialTheme]);
+        // set initial theme based on options or query string
+        if (initialTheme) {
+            themeChangeHandler(initialTheme);
+        }
+        const isInTeams = checkInTeams();
+        if (isInTeams) {
+            microsoftTeams.initialize(() => {
+                microsoftTeams.getContext(context => {
+                    batchedUpdates(() => {
+                        setInTeams(true);
+                        setContext(context);
+                        setFullScreen(context.isFullScreen);
+                    });
+                    themeChangeHandler(context.theme);
+                });
+                microsoftTeams.registerFullScreenHandler((isFullScreen) => {
+                    setFullScreen(isFullScreen);
+                });
+                microsoftTeams.registerOnThemeChangeHandler(themeChangeHandler);
+            });
+        } else {
+            setInTeams(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return [{ inTeams, fullScreen, theme, context, themeString }, { setTheme: themeChangeHandler }];
 }
