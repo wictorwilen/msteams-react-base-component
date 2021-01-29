@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*3.0.2*] - <*2021-01-29*>
+
+### Changes
+
+* Fixed issue where the Teams JS Library was not initialized while hosted outside of Teams (for instance in a popup)
+
 ## [*3.0.1*] - <*2012-12-18*>
 
 ### Changes
