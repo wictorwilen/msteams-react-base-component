@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Fixed issue where the Teams JS Library was not initialized while hosted outside of Teams (for instance in a popup)
 
-## [*3.0.1*] - <*2012-12-18*>
+## [*3.0.1*] - <*2020-12-18*>
 
 ### Changes
 
