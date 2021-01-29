@@ -103,6 +103,7 @@ export function useTeams(options?: { initialTheme?: string }): [
             });
         } else {
             setInTeams(false);
+            microsoftTeams.initialize();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
