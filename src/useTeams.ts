@@ -48,7 +48,7 @@ export const getQueryVariable = (variable: string): string | undefined => {
  * methods:
  *  - setTheme - manually set the theme
  */
-export function useTeams(options?: { initialTheme?: string }): [
+export function useTeams(options?: { initialTheme?: string, setThemeHandler?: (theme?: string) => void }): [
     {
         inTeams?: boolean,
         fullScreen?: boolean,
@@ -80,10 +80,12 @@ export function useTeams(options?: { initialTheme?: string }): [
         }
     };
 
+    const overrideThemeHandler = options?.setThemeHandler ? options.setThemeHandler : themeChangeHandler;
+
     useEffect(() => {
         // set initial theme based on options or query string
         if (initialTheme) {
-            themeChangeHandler(initialTheme);
+            overrideThemeHandler(initialTheme);
         }
         const isInTeams = checkInTeams();
         if (isInTeams) {
@@ -94,12 +96,12 @@ export function useTeams(options?: { initialTheme?: string }): [
                         setContext(context);
                         setFullScreen(context.isFullScreen);
                     });
-                    themeChangeHandler(context.theme);
+                    overrideThemeHandler(context.theme);
                 });
                 microsoftTeams.registerFullScreenHandler((isFullScreen) => {
                     setFullScreen(isFullScreen);
                 });
-                microsoftTeams.registerOnThemeChangeHandler(themeChangeHandler);
+                microsoftTeams.registerOnThemeChangeHandler(overrideThemeHandler);
             });
         } else {
             setInTeams(false);
@@ -108,5 +110,5 @@ export function useTeams(options?: { initialTheme?: string }): [
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return [{ inTeams, fullScreen, theme, context, themeString }, { setTheme: themeChangeHandler }];
+    return [{ inTeams, fullScreen, theme, context, themeString }, { setTheme: overrideThemeHandler }];
 }

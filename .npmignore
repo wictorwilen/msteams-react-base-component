@@ -12,3 +12,6 @@ tsconfig.es.json
 tslint.json
 .eslintrc.json
 .npmrc
+jest.config.js
+converage
+junit.xml
