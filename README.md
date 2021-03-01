@@ -22,7 +22,7 @@ const [{inTeams}] = useTeams();
 
 The `useTeams` hook will return a tuple of where an object of properties are in the first field and an object of methods in the second.
 
-> **NOTE**: using the hook will automatically call `microsoftTeams.initialize()` and ` microsoftTeams.getContext()` if the Microsoft Teams JS SDK is available.
+> **NOTE**: using the hook will automatically call `microsoftTeams.initialize()` and `microsoftTeams.getContext()` if the Microsoft Teams JS SDK is available.
 
 ### useTeams Hook arguments
 
@@ -30,7 +30,8 @@ The `useTeams` hook can take an *optional* object argument:
 
 | Argument | Description |
 |----------|-------------|
-| `initialTheme` | Manually set the initial theme (`default`, `dark` or `contrast`) |
+| `initialTheme?: string` | Manually set the initial theme (`default`, `dark` or `contrast`) |
+| `setThemeHandler?: (theme?: string) => void` | Custom handler for themes |
 
 ### Available properties
 
