@@ -16,6 +16,7 @@ export const checkInTeams = (): boolean => {
     }
 
     if ((window.parent === window.self && (window as any).nativeInterface) ||
+        window.navigator.userAgent.includes('Teams/') ||
         window.name === "embedded-page-container" ||
         window.name === "extension-tab-frame") {
         return true;
