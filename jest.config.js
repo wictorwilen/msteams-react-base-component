@@ -2,6 +2,7 @@ module.exports = {
     name: "client",
     displayName: "client",
     rootDir: "./",
+    testEnvironment: "jsdom",
     globals: {
         "ts-jest": {
             tsconfig: "<rootDir>/tsconfig.json",
@@ -12,7 +13,7 @@ module.exports = {
     },
     preset: "ts-jest/presets/js-with-ts",
     testMatch: [
-        "<rootDir>/**/*.spec.(ts|tsx|js)"
+        "<rootDir>/src/**/*.spec.(ts|tsx|js)"
     ],
     collectCoverageFrom: [
         "/**/*.{js,jsx,ts,tsx}",

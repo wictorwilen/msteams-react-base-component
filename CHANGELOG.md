@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*] - <**>
+
+### Changes
+
+* Dependency bump
+
+### Fixes
+
+* Fixed an issue where non source files was included in tests
+
 ## [*3.1.0*] - <*2021-03-01*>
 
 ### Added
