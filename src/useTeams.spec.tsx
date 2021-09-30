@@ -2,6 +2,10 @@
 // Licensed under the MIT license.
 // SPDX-License-Identifier: MIT
 
+/**
+ * @jest-environment jsdom
+ */
+
 // eslint-disable-next-line no-use-before-define
 import React from "react";
 import { render, waitFor } from "@testing-library/react";
@@ -29,7 +33,7 @@ describe("useTeams", () => {
         spyRegisterFullScreenHandler = jest.spyOn(microsoftTeams, "registerFullScreenHandler");
         spyGetContext = jest.spyOn(microsoftTeams, "getContext");
         spyGetContext.mockImplementation((cb) => {
-            // eslint-disable-next-line standard/no-callback-literal
+            // eslint-disable-next-line node/no-callback-literal
             cb({
                 isFullScreen: false,
                 theme: "default"
@@ -104,7 +108,7 @@ describe("useTeams", () => {
         };
 
         spyGetContext.mockImplementation((cb) => {
-            // eslint-disable-next-line standard/no-callback-literal
+            // eslint-disable-next-line node/no-callback-literal
             cb({
                 isFullScreen: false,
                 theme: "dark"
@@ -131,7 +135,7 @@ describe("useTeams", () => {
         };
 
         spyGetContext.mockImplementation((cb) => {
-            // eslint-disable-next-line standard/no-callback-literal
+            // eslint-disable-next-line node/no-callback-literal
             cb({
                 isFullScreen: false,
                 theme: "contrast"
@@ -158,7 +162,7 @@ describe("useTeams", () => {
         };
 
         spyGetContext.mockImplementation((cb) => {
-            // eslint-disable-next-line standard/no-callback-literal
+            // eslint-disable-next-line node/no-callback-literal
             cb({
                 isFullScreen: false,
                 theme: "dark"
@@ -239,7 +243,7 @@ describe("useTeams", () => {
         };
 
         spyGetContext.mockImplementation((cb) => {
-            // eslint-disable-next-line standard/no-callback-literal
+            // eslint-disable-next-line node/no-callback-literal
             cb({
                 isFullScreen: true,
                 theme: "default"
