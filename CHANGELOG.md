@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixes
 
 * Fixed an issue where non source files was included in tests
+* Fixed an issue to use userAgent to detect Teams desktop client (#20)
 
 ## [*3.1.0*] - <*2021-03-01*>
 
