@@ -15,8 +15,9 @@ module.exports = {
     testMatch: [
         "<rootDir>/src/**/*.spec.(ts|tsx|js)"
     ],
+    collectCoverage: true,
     collectCoverageFrom: [
-        "/**/*.{js,jsx,ts,tsx}",
+        "/src/**/*.{js,jsx,ts,tsx}",
         "!<rootDir>/node_modules/"
     ],
     coverageReporters: [

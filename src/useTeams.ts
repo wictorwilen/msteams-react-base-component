@@ -4,12 +4,12 @@
 
 import { useEffect, useState } from "react";
 import { unstable_batchedUpdates as batchedUpdates } from "react-dom";
-import * as microsoftTeams from "@microsoft/teams-js";
+import { app, pages } from "@microsoft/teams-js";
 import { teamsDarkTheme, teamsHighContrastTheme, teamsTheme, ThemePrepared } from "@fluentui/react-northstar";
 
 export const checkInTeams = (): boolean => {
     // eslint-disable-next-line dot-notation
-    const microsoftTeamsLib = microsoftTeams || window["microsoftTeams"];
+    const microsoftTeamsLib = window["microsoftTeams"];
 
     if (!microsoftTeamsLib) {
         return false; // the Microsoft Teams library is for some reason not loaded
@@ -55,7 +55,7 @@ export function useTeams(options?: { initialTheme?: string, setThemeHandler?: (t
         fullScreen?: boolean,
         theme: ThemePrepared,
         themeString: string,
-        context?: microsoftTeams.Context
+        context?: app.Context
     }, {
         setTheme: (theme: string | undefined) => void
     }] {
@@ -64,7 +64,7 @@ export function useTeams(options?: { initialTheme?: string, setThemeHandler?: (t
     const [theme, setTheme] = useState<ThemePrepared>(teamsTheme);
     const [themeString, setThemeString] = useState<string>("default");
     const [initialTheme] = useState<string | undefined>((options && options.initialTheme) ? options.initialTheme : getQueryVariable("theme"));
-    const [context, setContext] = useState<microsoftTeams.Context>();
+    const [context, setContext] = useState<app.Context | undefined>(undefined);
 
     const themeChangeHandler = (theme: string | undefined) => {
         setThemeString(theme || "default");
@@ -90,23 +90,26 @@ export function useTeams(options?: { initialTheme?: string, setThemeHandler?: (t
         }
         const isInTeams = checkInTeams();
         if (isInTeams) {
-            microsoftTeams.initialize(() => {
-                microsoftTeams.getContext(context => {
+            app.initialize().then(() => {
+                app.getContext().then(context => {
                     batchedUpdates(() => {
                         setInTeams(true);
                         setContext(context);
-                        setFullScreen(context.isFullScreen);
+                        setFullScreen(context.page.isFullScreen);
                     });
-                    overrideThemeHandler(context.theme);
+                    overrideThemeHandler(context.app.theme);
+                    app.registerOnThemeChangeHandler(overrideThemeHandler);
+                    pages.registerFullScreenHandler((isFullScreen) => {
+                        setFullScreen(isFullScreen);
+                    });
+                }).catch(() => {
+                    setInTeams(false);
                 });
-                microsoftTeams.registerFullScreenHandler((isFullScreen) => {
-                    setFullScreen(isFullScreen);
-                });
-                microsoftTeams.registerOnThemeChangeHandler(overrideThemeHandler);
+            }).catch(() => {
+                setInTeams(false);
             });
         } else {
             setInTeams(false);
-            microsoftTeams.initialize();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

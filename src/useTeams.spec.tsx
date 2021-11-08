@@ -10,7 +10,7 @@
 import React from "react";
 import { render, waitFor } from "@testing-library/react";
 import * as useTeams from "./useTeams";
-import * as microsoftTeams from "@microsoft/teams-js";
+import { app, pages } from "@microsoft/teams-js";
 import { Flex, Header, Provider } from "@fluentui/react-northstar";
 
 describe("useTeams", () => {
@@ -25,19 +25,22 @@ describe("useTeams", () => {
         jest.clearAllMocks();
         spyCheckInTeams = jest.spyOn(useTeams, "checkInTeams");
         spyCheckInTeams.mockReturnValue(true);
-        spyInitialize = jest.spyOn(microsoftTeams, "initialize");
-        spyInitialize.mockImplementation(cb => {
-            if (cb) { setTimeout(() => { cb(); }, 200); };
+        spyInitialize = jest.spyOn(app, "initialize");
+        spyInitialize.mockImplementation(() => {
+            return Promise.resolve();
         });
-        spyRegisterOnThemeChangeHandler = jest.spyOn(microsoftTeams, "registerOnThemeChangeHandler");
-        spyRegisterFullScreenHandler = jest.spyOn(microsoftTeams, "registerFullScreenHandler");
-        spyGetContext = jest.spyOn(microsoftTeams, "getContext");
-        spyGetContext.mockImplementation((cb) => {
-            // eslint-disable-next-line node/no-callback-literal
-            cb({
-                isFullScreen: false,
-                theme: "default"
-            });
+        spyRegisterOnThemeChangeHandler = jest.spyOn(app, "registerOnThemeChangeHandler");
+        spyRegisterFullScreenHandler = jest.spyOn(pages, "registerFullScreenHandler");
+        spyGetContext = jest.spyOn(app, "getContext");
+        spyGetContext.mockImplementation(() => {
+            return Promise.resolve({
+                app: {
+                    theme: "default"
+                },
+                page: {
+                    isFullScreen: false
+                }
+            } as Partial<app.Context>);
         });
     });
 
@@ -52,10 +55,11 @@ describe("useTeams", () => {
         spyCheckInTeams.mockReturnValue(false);
 
         const { container } = render(<App />);
-
-        expect(spyInitialize).toBeCalledTimes(1);
-        expect(spyCheckInTeams).toBeCalledTimes(1);
-        expect(container.textContent).toBe("false");
+        await waitFor(() => {
+            expect(spyInitialize).toBeCalledTimes(0);
+            expect(spyCheckInTeams).toBeCalledTimes(1);
+            expect(container.textContent).toBe("false");
+        });
     });
 
     it("Should create the useTeams hook - in teams", async () => {
@@ -93,7 +97,7 @@ describe("useTeams", () => {
 
         await waitFor(() => {
             expect(spyCheckInTeams).toBeCalledTimes(1);
-            expect(spyInitialize).toBeCalledTimes(1);
+            expect(spyInitialize).toBeCalledTimes(0);
         });
 
         expect(container.textContent).toBe("false, default");
@@ -107,12 +111,15 @@ describe("useTeams", () => {
             );
         };
 
-        spyGetContext.mockImplementation((cb) => {
-            // eslint-disable-next-line node/no-callback-literal
-            cb({
-                isFullScreen: false,
-                theme: "dark"
-            });
+        spyGetContext.mockImplementation(() => {
+            return Promise.resolve({
+                app: {
+                    theme: "dark"
+                },
+                page: {
+                    isFullScreen: false
+                }
+            } as Partial<app.Context>);
         });
 
         const { container } = render(<App />);
@@ -134,12 +141,15 @@ describe("useTeams", () => {
             );
         };
 
-        spyGetContext.mockImplementation((cb) => {
-            // eslint-disable-next-line node/no-callback-literal
-            cb({
-                isFullScreen: false,
-                theme: "contrast"
-            });
+        spyGetContext.mockImplementation(() => {
+            return Promise.resolve({
+                app: {
+                    theme: "contrast"
+                },
+                page: {
+                    isFullScreen: false
+                }
+            } as Partial<app.Context>);
         });
 
         const { container } = render(<App />);
@@ -161,12 +171,15 @@ describe("useTeams", () => {
             );
         };
 
-        spyGetContext.mockImplementation((cb) => {
-            // eslint-disable-next-line node/no-callback-literal
-            cb({
-                isFullScreen: false,
-                theme: "dark"
-            });
+        spyGetContext.mockImplementation(() => {
+            return Promise.resolve({
+                app: {
+                    theme: "dark"
+                },
+                page: {
+                    isFullScreen: false
+                }
+            } as Partial<app.Context>);
         });
 
         const { container } = render(<App />);
@@ -242,12 +255,15 @@ describe("useTeams", () => {
             );
         };
 
-        spyGetContext.mockImplementation((cb) => {
-            // eslint-disable-next-line node/no-callback-literal
-            cb({
-                isFullScreen: true,
-                theme: "default"
-            });
+        spyGetContext.mockImplementation(() => {
+            return Promise.resolve({
+                app: {
+                    theme: "default"
+                },
+                page: {
+                    isFullScreen: true
+                }
+            } as Partial<app.Context>);
         });
 
         const { container } = render(<App />);
@@ -296,7 +312,7 @@ describe("useTeams", () => {
         const ping = jest.fn();
         const pingEffect = jest.fn();
 
-        const spyAppInit = jest.spyOn(microsoftTeams.appInitialization, "notifyAppLoaded");
+        const spyAppInit = jest.spyOn(app, "notifyAppLoaded");
         spyAppInit.mockImplementation(jest.fn());
 
         const HooksTab = () => {
@@ -305,7 +321,7 @@ describe("useTeams", () => {
             React.useEffect(() => {
                 pingEffect();
                 if (inTeams) {
-                    microsoftTeams.appInitialization.notifyAppLoaded();
+                    app.notifyAppLoaded();
                 }
             }, [inTeams]);
 
