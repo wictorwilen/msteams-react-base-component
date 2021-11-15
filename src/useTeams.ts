@@ -8,13 +8,6 @@ import { app, pages } from "@microsoft/teams-js";
 import { teamsDarkTheme, teamsHighContrastTheme, teamsTheme, ThemePrepared } from "@fluentui/react-northstar";
 
 export const checkInTeams = (): boolean => {
-    // eslint-disable-next-line dot-notation
-    const microsoftTeamsLib = window["microsoftTeams"];
-
-    if (!microsoftTeamsLib) {
-        return false; // the Microsoft Teams library is for some reason not loaded
-    }
-
     if ((window.parent === window.self && (window as any).nativeInterface) ||
         window.navigator.userAgent.includes("Teams/") ||
         window.name === "embedded-page-container" ||
