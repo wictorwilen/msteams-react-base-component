@@ -1,6 +1,6 @@
 name: msteams-react-base-component CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -20,6 +20,11 @@ jobs:
     - run: npm install
     - run: npm run lint
     - run: npm run test
+    - uses: codecov/codecov-action@v2
+      with:
+        directory: ./coverage
+        flags: unittests 
+        fail_ci_if_error: true
     - run: npm run build
       env:
         CI: true
