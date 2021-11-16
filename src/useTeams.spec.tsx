@@ -56,8 +56,8 @@ describe("useTeams", () => {
 
         const { container } = render(<App />);
         await waitFor(() => {
-            expect(spyInitialize).toBeCalledTimes(0);
-            expect(spyCheckInTeams).toBeCalledTimes(1);
+            expect(spyInitialize).toBeCalledTimes(1);
+            expect(spyCheckInTeams).toBeCalledTimes(0);
             expect(container.textContent).toBe("false");
         });
     });
@@ -73,7 +73,7 @@ describe("useTeams", () => {
         const { container } = render(<App />);
 
         await waitFor(() => {
-            expect(spyCheckInTeams).toBeCalledTimes(1);
+            expect(spyCheckInTeams).toBeCalledTimes(0);
             expect(spyInitialize).toBeCalledTimes(1);
             expect(spyGetContext).toBeCalledTimes(1);
             expect(spyRegisterFullScreenHandler).toBeCalledTimes(1);
@@ -92,12 +92,13 @@ describe("useTeams", () => {
         };
 
         spyCheckInTeams.mockReturnValue(false);
+        spyInitialize.mockRejectedValue(undefined);
 
         const { container } = render(<App />);
 
         await waitFor(() => {
-            expect(spyCheckInTeams).toBeCalledTimes(1);
-            expect(spyInitialize).toBeCalledTimes(0);
+            expect(spyCheckInTeams).toBeCalledTimes(0);
+            expect(spyInitialize).toBeCalledTimes(1);
         });
 
         expect(container.textContent).toBe("false, default");
@@ -125,7 +126,7 @@ describe("useTeams", () => {
         const { container } = render(<App />);
 
         await waitFor(() => {
-            expect(spyCheckInTeams).toBeCalledTimes(1);
+            expect(spyCheckInTeams).toBeCalledTimes(0);
             expect(spyInitialize).toBeCalledTimes(1);
             expect(spyGetContext).toBeCalledTimes(1);
         });
@@ -155,7 +156,7 @@ describe("useTeams", () => {
         const { container } = render(<App />);
 
         await waitFor(() => {
-            expect(spyCheckInTeams).toBeCalledTimes(1);
+            expect(spyCheckInTeams).toBeCalledTimes(0);
             expect(spyInitialize).toBeCalledTimes(1);
             expect(spyGetContext).toBeCalledTimes(1);
         });
@@ -185,7 +186,7 @@ describe("useTeams", () => {
         const { container } = render(<App />);
 
         await waitFor(() => {
-            expect(spyCheckInTeams).toBeCalledTimes(1);
+            expect(spyCheckInTeams).toBeCalledTimes(0);
             expect(spyInitialize).toBeCalledTimes(1);
             expect(spyGetContext).toBeCalledTimes(1);
         });
@@ -204,7 +205,7 @@ describe("useTeams", () => {
         const { container } = render(<App />);
 
         await waitFor(() => {
-            expect(spyCheckInTeams).toBeCalledTimes(1);
+            expect(spyCheckInTeams).toBeCalledTimes(0);
             expect(spyInitialize).toBeCalledTimes(1);
             expect(spyGetContext).toBeCalledTimes(1);
         });

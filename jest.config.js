@@ -11,7 +11,7 @@ module.exports = {
             }
         }
     },
-    preset: "ts-jest/presets/js-with-ts",
+    preset: "ts-jest",
     testMatch: [
         "<rootDir>/src/**/*.spec.(ts|tsx|js)"
     ],

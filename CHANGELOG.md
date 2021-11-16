@@ -8,9 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [*Unreleased*] - <**>
 
+### Added
+
+* Added the `host` property to indicate what host the app and environemnt the tab is hosted in
+
 ### Changes
 
 * Upgraded `@microsoft/teams-js` SDK to version 2
+
+### Deprecated
+
+* The `checkInTeams` method only works for Microsoft Teams apps and not the new Microsoft 365 apps and will be removed in the future
 
 ## [*3.1.1*] - <*2021-09-30*>
 

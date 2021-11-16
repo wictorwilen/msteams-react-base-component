@@ -13,5 +13,6 @@ tslint.json
 .eslintrc.json
 .npmrc
 jest.config.js
-converage
+coverage
 junit.xml
+*.spec.d.ts
