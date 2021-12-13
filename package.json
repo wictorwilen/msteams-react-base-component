@@ -1,6 +1,6 @@
 {
   "name": "msteams-react-base-component",
-  "version": "4.0.0-preview4",
+  "version": "4.0.0-preview5",
   "description": "React helper components for Microsoft Teams apps",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
@@ -38,7 +38,7 @@
   "license": "MIT",
   "devDependencies": {
     "@fluentui/react-northstar": "^0.51.0",
-    "@microsoft/teams-js": "^2.0.0-beta.1",
+    "@microsoft/teams-js": "^2.0.0-beta.2",
     "@testing-library/react": "^12.1.1",
     "@types/enzyme": "^3.10.10",
     "@types/jest": "^27.0.2",
