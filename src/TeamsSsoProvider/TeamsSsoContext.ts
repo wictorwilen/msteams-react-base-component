@@ -20,6 +20,8 @@ export interface TeamsSsoContextProps {
      * Optional error message
      */
     error?: string;
+
+    logout: () => void;
 };
 
 export const TeamsSsoContext = React.createContext<Partial<TeamsSsoContextProps>>({

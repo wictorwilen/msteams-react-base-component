@@ -5,6 +5,9 @@
 import React from "react";
 import { TeamsSsoContext } from "./TeamsSsoContext";
 
+/**
+ * Exposes the TeamsSsoProvider context as a hook
+ */
 export const useTeamsSsoContext = () => {
     const context = React.useContext(TeamsSsoContext);
     return context;

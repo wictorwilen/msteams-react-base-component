@@ -151,7 +151,22 @@ export const TeamsSsoProvider = (props: React.PropsWithChildren<TeamsSsoProvider
 
     }, [token, props.useMgt]);
 
-    const memoedToken = React.useMemo(() => ({ token, name, error }), [token, name, error]);
+    const logout = React.useCallback((): void => {
+        if (props.appId) {
+            const msalConfig = {
+                auth: {
+                    clientId: props.appId
+                }
+            };
+            const msalInstance = new msal.PublicClientApplication(msalConfig);
+            setToken(undefined);
+            setError(undefined);
+            setName(undefined);
+            msalInstance.logoutRedirect();
+        }
+    }, [props.appId]);
+
+    const memoedToken = React.useMemo(() => ({ token, name, error, logout }), [token, name, error, logout]);
 
     return (<TeamsSsoContext.Provider value={memoedToken} >
         {props.children}
