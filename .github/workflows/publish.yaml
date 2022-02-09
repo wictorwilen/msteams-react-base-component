@@ -14,7 +14,7 @@ jobs:
     - run: npm install
     - run: npm run build
     - name: Publish release
-      if: "!contains(github.ref, 'preview')"
+      if: "!contains(github.ref, 'preview') && !contains(github.ref, 'next')"
       run: npm publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -23,3 +23,8 @@ jobs:
       run: npm publish --tag preview
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    - name: Publish next
+      if: contains(github.ref, 'next')
+      run: npm publish --tag next
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}        
