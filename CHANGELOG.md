@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Added the `TeamsSsoProvider`
 
+### Changes
+
+* Removed support for Node 10.x
+
 ## [*3.1.1*] - <*2021-09-30*>
 
 ### Changes
