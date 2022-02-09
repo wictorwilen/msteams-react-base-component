@@ -237,7 +237,8 @@ export const App = () => {
               appIdUri={process.env.TAB_APP_URI as string}
               appId={process.env.TAB_APP_ID as string}
               redirectUri={process.env.TAB_APP_REDIRECT as string}
-              scopes={["Presence.Read", "User.Read"]}>
+              scopes={["Presence.Read", "User.Read"]}
+              useMgt={true}>
               <Person personQuery="me" showPresence={true} />
             </TeamsSsoProvider>
         </Provider>
