@@ -13,6 +13,8 @@ import * as useTeams from "./useTeams";
 import * as microsoftTeams from "@microsoft/teams-js";
 import { Flex, Header, Provider } from "@fluentui/react-northstar";
 
+jest.mock("@microsoft/teams-js");
+
 describe("useTeams", () => {
     let spyCheckInTeams: jest.SpyInstance;
     let spyInitialize: jest.SpyInstance;
