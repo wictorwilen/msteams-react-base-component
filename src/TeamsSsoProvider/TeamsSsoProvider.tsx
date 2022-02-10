@@ -26,7 +26,7 @@ export const TeamsSsoProvider = (props: React.PropsWithChildren<TeamsSsoProvider
 
     const [{ inTeams }] = useTeams();
 
-    useEffect(() => {
+    const login = React.useCallback((): void => {
         if (inTeams === true) {
 
             microsoftTeams.authentication.getAuthToken({
@@ -53,6 +53,7 @@ export const TeamsSsoProvider = (props: React.PropsWithChildren<TeamsSsoProvider
                                 setName(account[0].name);
                             }
                             setError(undefined);
+                            microsoftTeams.appInitialization.notifySuccess();
                         }).catch(err => {
                             if (err instanceof msal.InteractionRequiredAuthError) {
                                 if (props.scopes && props.redirectUri && props.appId) {
@@ -66,6 +67,7 @@ export const TeamsSsoProvider = (props: React.PropsWithChildren<TeamsSsoProvider
                                             setName(account[0].name);
                                         }
                                         setError(undefined);
+                                        microsoftTeams.appInitialization.notifySuccess();
                                     }).catch(err => {
                                         setError(err);
                                     });
@@ -75,9 +77,17 @@ export const TeamsSsoProvider = (props: React.PropsWithChildren<TeamsSsoProvider
                             }
                         });
                     } else {
+                        if (props.scopes && !props.appId) {
+                            const message = "When scopes is specified an appId is also required";
+                            setError(message);
+                            microsoftTeams.appInitialization.notifyFailure({
+                                reason: microsoftTeams.appInitialization.FailedReason.AuthFailed,
+                                message
+                            });
+                        }
                         setToken(token);
+                        microsoftTeams.appInitialization.notifySuccess();
                     }
-                    microsoftTeams.appInitialization.notifySuccess();
                 },
                 failureCallback: (message: string) => {
                     setError(message);
@@ -121,16 +131,25 @@ export const TeamsSsoProvider = (props: React.PropsWithChildren<TeamsSsoProvider
                             }).catch(err => {
                                 setError(err);
                             });
+                        } else {
+                            throw new Error("Missing redirectUri");
                         }
                     } else {
                         setError(err);
                     }
                 });
 
+            } else {
+                throw new Error("Missing scopes and/or appId");
             }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [inTeams]);
+    }, [inTeams, props.appId, props.appIdUri, props.scopes, props.redirectUri]);
+
+    useEffect(() => {
+        if (!props.autoLogin === false) {
+            login();
+        }
+    }, [login, props.autoLogin]);
 
     useEffect(() => {
         if (props.useMgt) {
@@ -163,10 +182,12 @@ export const TeamsSsoProvider = (props: React.PropsWithChildren<TeamsSsoProvider
             setError(undefined);
             setName(undefined);
             msalInstance.logoutRedirect();
+        } else {
+            console.warn("Nothing to logout from, missing appId");
         }
     }, [props.appId]);
 
-    const memoedToken = React.useMemo(() => ({ token, name, error, logout }), [token, name, error, logout]);
+    const memoedToken = React.useMemo(() => ({ token, name, error, logout, login }), [token, name, error, logout, login]);
 
     return (<TeamsSsoContext.Provider value={memoedToken} >
         {props.children}

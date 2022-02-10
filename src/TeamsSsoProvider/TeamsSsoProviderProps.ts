@@ -26,4 +26,9 @@ export interface TeamsSsoProviderProps {
      * Set to true to initialize Microsoft Graph Toolkit authorization provider
      */
     useMgt?: boolean;
+
+    /**
+     * Automatically log in user, when outside of Teams. Defaults to true. If set to false the login method of TeamsSsoContext must be called manually
+     */
+    autoLogin?: boolean;
 }

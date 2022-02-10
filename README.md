@@ -123,16 +123,19 @@ The `TeamsSsoProvider` requires the following configuration properties:
 | `scopes` | *Optional* The Scopes to use. Default to `[""]` |
 | `redirectUri` | *Optional* The Redirect URI to be used for the AAD App |
 | `useMgt` | *Optional* Boolean value indicating if the Microsoft Graph Toolkit auth provider should be initialized |
+| `autoLogin` | *Optional* Boolean value indicating if the provider should automatically log in the user. Defaults to true. If set to false, then `login` of the `TeamsSsoProvider` context object has to be called. |
 
-### State
+### Context
 
-The `TeamsSsoProvider` contains the following state variables
+The `TeamsSsoProvider` contains the following context variables and methods
 
-| Variable | Description  |
+| Variable/method | Description  |
 |-|-|
 | `token` | The SSO/access token. `undefined` if not set |
 | `name` | The user name. Defaults to `undefined` |
 | `error` | Any error message. `undefined` if no errors |
+| `logout()` | Signs the user out of the application |
+| `login()` | Signs the user in to the application |
 
 ### Usage with the `TeamsSsoContext.Consumer`
 
