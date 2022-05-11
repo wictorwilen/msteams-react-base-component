@@ -4,6 +4,8 @@
 
 import React from "react";
 
+export declare type TeamsSsoStatus = "Unknown" | "LoggingIn" | "LoggedIn" | "WaitingForUser" | "Error";
+
 /**
  * The Teams SSO Context
  */
@@ -30,6 +32,10 @@ export interface TeamsSsoContextProps {
      * Login method
      */
     login: () => void;
+
+    status: string;
+
+    mgtLoaded: boolean;
 };
 
 export const TeamsSsoContext = React.createContext<Partial<TeamsSsoContextProps>>({

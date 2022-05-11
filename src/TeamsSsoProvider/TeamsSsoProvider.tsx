@@ -12,7 +12,7 @@ import * as microsoftTeams from "@microsoft/teams-js";
 import { Providers } from "@microsoft/mgt-element/dist/es6/providers/Providers";
 import { ProviderState } from "@microsoft/mgt-element/dist/es6/providers/IProvider";
 import { SimpleProvider } from "@microsoft/mgt-element/dist/es6/providers/SimpleProvider";
-import { TeamsSsoContext } from "./TeamsSsoContext";
+import { TeamsSsoContext, TeamsSsoStatus } from "./TeamsSsoContext";
 
 /**
  * Teams React SSO Provider
@@ -23,12 +23,15 @@ export const TeamsSsoProvider = (props: React.PropsWithChildren<TeamsSsoProvider
     const [token, setToken] = React.useState<string | undefined>(undefined);
     const [name, setName] = React.useState<string | undefined>(undefined);
     const [error, setError] = React.useState<string | undefined>(undefined);
+    const [isLoggingIn, setIsLoggingIn] = React.useState<boolean>(false);
+    const [status, setStatus] = React.useState<TeamsSsoStatus>("Unknown");
+    const [mgtLoaded, setMgtLoaded] = React.useState<boolean>(false);
 
     const [{ inTeams }] = useTeams();
 
     const login = React.useCallback((): void => {
         if (inTeams === true) {
-
+            setStatus("LoggingIn");
             microsoftTeams.authentication.getAuthToken({
                 successCallback: (token: string) => {
                     const decoded: { [key: string]: any; } = jwtDecode(token) as { [key: string]: any; };
@@ -55,22 +58,32 @@ export const TeamsSsoProvider = (props: React.PropsWithChildren<TeamsSsoProvider
                             setError(undefined);
                             microsoftTeams.appInitialization.notifySuccess();
                         }).catch(err => {
-                            if (err instanceof msal.InteractionRequiredAuthError) {
+                            if (err instanceof msal.InteractionRequiredAuthError || err instanceof msal.BrowserAuthError) {
                                 if (props.scopes && props.redirectUri && props.appId) {
-                                    msalInstance.loginPopup({
-                                        scopes: props.scopes,
-                                        redirectUri: props.redirectUri
-                                    }).then(result => {
-                                        setToken(result.accessToken);
-                                        const account = msalInstance.getAllAccounts();
-                                        if (account.length === 1) {
-                                            setName(account[0].name);
-                                        }
-                                        setError(undefined);
-                                        microsoftTeams.appInitialization.notifySuccess();
-                                    }).catch(err => {
-                                        setError(err);
+                                    microsoftTeams.authentication.authenticate({
+                                        successCallback: (result) => {
+                                            console.log(result);
+                                        },
+                                        failureCallback: (reason) => {
+                                            console.error(reason);
+                                        },
+                                        url: props.redirectUri
                                     });
+                                    // TODO: Teams popup - needs a handler page!
+                                    // msalInstance.loginPopup({
+                                    //     scopes: props.scopes,
+                                    //     redirectUri: props.redirectUri
+                                    // }).then(result => {
+                                    //     setToken(result.accessToken);
+                                    //     const account = msalInstance.getAllAccounts();
+                                    //     if (account.length === 1) {
+                                    //         setName(account[0].name);
+                                    //     }
+                                    //     setError(undefined);
+                                    //     microsoftTeams.appInitialization.notifySuccess();
+                                    // }).catch(err => {
+                                    //     setError(err);
+                                    // });
                                 }
                             } else {
                                 setError(err);
@@ -101,13 +114,14 @@ export const TeamsSsoProvider = (props: React.PropsWithChildren<TeamsSsoProvider
 
         } else if (inTeams === false) {
             if (props.scopes && props.appId) {
-                const msalConfig = {
+                const msalConfig: msal.Configuration = {
                     auth: {
-                        clientId: props.appId
+                        clientId: props.appId,
+                        redirectUri: props.redirectUri
                     }
                 };
                 const msalInstance = new msal.PublicClientApplication(msalConfig);
-
+                setStatus("LoggingIn");
                 msalInstance.ssoSilent({ scopes: props.scopes }).then(result => {
                     setToken(result.accessToken);
                     const account = msalInstance.getAllAccounts();
@@ -115,8 +129,10 @@ export const TeamsSsoProvider = (props: React.PropsWithChildren<TeamsSsoProvider
                         setName(account[0].name);
                     }
                     setError(undefined);
+                    setStatus("LoggedIn");
                 }).catch(err => {
-                    if (err instanceof msal.InteractionRequiredAuthError) {
+                    if (err instanceof msal.InteractionRequiredAuthError || err instanceof msal.BrowserAuthError) {
+                        setStatus("WaitingForUser");
                         if (props.scopes && props.redirectUri && props.appId) {
                             msalInstance.loginPopup({
                                 scopes: props.scopes,
@@ -127,29 +143,39 @@ export const TeamsSsoProvider = (props: React.PropsWithChildren<TeamsSsoProvider
                                 if (account.length === 1) {
                                     setName(account[0].name);
                                 }
+                                setStatus("LoggedIn");
                                 setError(undefined);
                             }).catch(err => {
+                                setStatus("Error");
                                 setError(err);
                             });
                         } else {
                             throw new Error("Missing redirectUri");
                         }
                     } else {
+                        setStatus("Error");
                         setError(err);
                     }
                 });
 
             } else {
+                setStatus("Error");
                 throw new Error("Missing scopes and/or appId");
             }
         }
     }, [inTeams, props.appId, props.appIdUri, props.scopes, props.redirectUri]);
 
     useEffect(() => {
-        if (!props.autoLogin === false) {
-            login();
+        if (inTeams !== undefined) {
+            if (!isLoggingIn) {
+                if (props.autoLogin === true) {
+                    console.log("auto logging in");
+                    setIsLoggingIn(true);
+                    login();
+                }
+            }
         }
-    }, [login, props.autoLogin]);
+    }, [login, inTeams, isLoggingIn, props.autoLogin]);
 
     useEffect(() => {
         if (props.useMgt) {
@@ -163,6 +189,7 @@ export const TeamsSsoProvider = (props: React.PropsWithChildren<TeamsSsoProvider
 
             if (token) {
                 Providers.globalProvider.setState(ProviderState.SignedIn);
+                setMgtLoaded(true);
             } else {
                 Providers.globalProvider.setState(ProviderState.Loading);
             }
@@ -187,7 +214,7 @@ export const TeamsSsoProvider = (props: React.PropsWithChildren<TeamsSsoProvider
         }
     }, [props.appId]);
 
-    const memoedToken = React.useMemo(() => ({ token, name, error, logout, login }), [token, name, error, logout, login]);
+    const memoedToken = React.useMemo(() => ({ token, name, error, logout, login, status, mgtLoaded }), [token, name, error, logout, login, status, mgtLoaded]);
 
     return (<TeamsSsoContext.Provider value={memoedToken} >
         {props.children}
