@@ -24,7 +24,7 @@ const [{inTeams}] = useTeams();
 
 The `useTeams` hook will return a tuple of where an object of properties are in the first field and an object of methods in the second.
 
-> **NOTE**: using the hook will automatically call `microsoftTeams.initialize()` and `microsoftTeams.getContext()` if the Microsoft Teams JS SDK is available.
+> **NOTE**: using the hook will automatically initialize the Microsoft Teams JS SDK is available.
 
 ### useTeams Hook arguments
 
@@ -43,7 +43,7 @@ The `useTeams` hook can take an *optional* object argument:
 | `fullScreen` | boolean? | `true` if the Tab is in full-screen, otherwise `false` |
 | `themeString` | string | The value of `default`, `dark` or `contrast` |
 | `theme` | ThemePrepared | The Fluent UI Theme object for the current theme |
-| `context` | `microsoftTeams.Context?` | `undefined` while the Tab is loading or if not hosted in Teams, set to a value once the Tab is initialized and context available |
+| `context` | `Context?` | `undefined` while the Tab is loading or if not hosted in Teams, set to a value once the Tab is initialized and context available |
 
 ### Available methods
 
@@ -98,156 +98,6 @@ The package also exports two helper methods, both used internally by the `useTea
 
 `checkInTeams(): boolean` - returns true if hosted inside Microsoft Teams.
 
-## The `TeamsSsoProvider`
-
-The `TeamsSsoProvider` allows for a minimal coding experience when using Teams SSO tabs and authorization tokens. It works with Microsoft Teams SSO tabs that are opened inside of Microsoft Teams, as well as outside of Microsoft Teams.
-
-## Importing the provider
-
-Import he provider in your React project as follows:
-
-``` TypeScript
-import 
-  { TeamsSsoProvider, useTeamsSsoContext, TeamsSsoContext } 
-  from "msteams-react-base-component/lib/esm/TeamsSsoProvider";
-```
-
-### Configuration
-
-The `TeamsSsoProvider` requires the following configuration properties:
-
-| Property | Description |
-|-|-|
-| `appIdUri` | *Required* The Azure AD App ID URI |
-| `appId` | *Optional* The Azure AD App ID |
-| `scopes` | *Optional* The Scopes to use. Default to `[""]` |
-| `redirectUri` | *Optional* The Redirect URI to be used for the AAD App |
-| `useMgt` | *Optional* Boolean value indicating if the Microsoft Graph Toolkit auth provider should be initialized |
-| `autoLogin` | *Optional* Boolean value indicating if the provider should automatically log in the user. Defaults to true. If set to false, then `login` of the `TeamsSsoProvider` context object has to be called. |
-
-### Context
-
-The `TeamsSsoProvider` contains the following context variables and methods
-
-| Variable/method | Description  |
-|-|-|
-| `token` | The SSO/access token. `undefined` if not set |
-| `name` | The user name. Defaults to `undefined` |
-| `error` | Any error message. `undefined` if no errors |
-| `logout()` | Signs the user out of the application |
-| `login()` | Signs the user in to the application |
-
-### Usage with the `TeamsSsoContext.Consumer`
-
-To make an SSO token available to all your components, in the tree below the provider, use the following approach:
-
-``` TypeScript
-export const App = () => {
-    return (
-        <Provider theme={theme}>
-            <TeamsSsoProvider
-              appIdUri={process.env.TAB_APP_URI as string}>
-              <TeamsSsoContext.Consumer>
-              { state => (
-                <div>Your token is <b>${state.token}</b></div> 
-              )}
-              </TeamsSsoContext.Consumer>
-            </TeamsSsoProvider>
-        </Provider>
-    );
-}
-```
-
-### Usage with the `useTeamsSsoContext` hook
-
-To access the token in code and sub components use the following method:
-
-``` TypeScript
-
-const MyComponent = () => {
-    const { token } = useTeamsSsoContext();
-    return <div>Your token is <b>${token}</b></div>;
-}
-
-export const App = () => {
-    return (
-        <Provider theme={theme}>
-            <TeamsSsoProvider
-              appIdUri={process.env.TAB_APP_URI as string}>
-                <MyComponent />
-            </TeamsSsoProvider>
-        </Provider>
-    );
-}
-```
-
-### Usage outside of Teams
-
-To support usage outside of Teams (for instance to use as a PWA), you also need to specify the `appId` and `redirectUri` properties:
-
-``` TypeScript
-export const App = () => {
-    return (
-        <Provider theme={theme}>
-            <TeamsSsoProvider
-              appIdUri={process.env.TAB_APP_URI as string}
-              appId={process.env.TAB_APP_ID as string}
-              redirectUri={process.env.TAB_APP_REDIRECT as string}>
-              <TeamsSsoContext.Consumer>
-              { state => (
-                <div>Your token is <b>${state.token}</b></div> 
-              )}
-              </TeamsSsoContext.Consumer>
-            </TeamsSsoProvider>
-        </Provider>
-    );
-}
-```
-
-### Scopes
-
-To request more scopes on the access token, than an empty SSO token, you need to specify the scopes in the `scopes` property. Note, that requesting scopes will popup a request for consent dialog, even when inside Microsoft Teams.
-
-``` TypeScript
-export const App = () => {
-    return (
-        <Provider theme={theme}>
-            <TeamsSsoProvider
-              appIdUri={process.env.TAB_APP_URI as string}
-              appId={process.env.TAB_APP_ID as string}
-              redirectUri={process.env.TAB_APP_REDIRECT as string}
-              scopes={["Presence.Read", "User.Read"]}>
-              <TeamsSsoContext.Consumer>
-              { state => (
-                <div>Your token is <b>${state.token}</b></div> 
-              )}
-              </TeamsSsoContext.Consumer>
-            </TeamsSsoProvider>
-        </Provider>
-    );
-}
-```
-
-### Usage with Microsoft Graph Toolkit
-
-For seamless use with the Microsoft Graph Toolkit (MGT), the only thing you need to specify is the `useMgt` property and set it to true:
-
-``` TypeScript
-export const App = () => {
-    return (
-        <Provider theme={theme}>
-            <TeamsSsoProvider
-              appIdUri={process.env.TAB_APP_URI as string}
-              appId={process.env.TAB_APP_ID as string}
-              redirectUri={process.env.TAB_APP_REDIRECT as string}
-              scopes={["Presence.Read", "User.Read"]}
-              useMgt={true}>
-              <Person personQuery="me" showPresence={true} />
-            </TeamsSsoProvider>
-        </Provider>
-    );
-}
-```
 # License
 
 Copyright (c) Wictor Wilén. All rights reserved.

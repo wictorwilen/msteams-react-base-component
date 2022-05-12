@@ -8,13 +8,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [*Unreleased*] - <**>
 
-### Added
-
-* Added the `TeamsSsoProvider`
-
 ### Changes
 
 * Removed support for Node 10.x
+* Upgraded `@microsoft/teams-js` SDK to version 2
+
+### Deleted
+
+* Deleted the `checkInTeams` helper method
+* Deleted the `getQueryVariable` helper method
 
 ## [*3.1.1*] - <*2021-09-30*>
 
