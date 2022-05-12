@@ -25,6 +25,7 @@ describe("useTeams", () => {
         jest.clearAllMocks();
 
         window["microsoftTeams"] = {};
+        window.history.pushState({}, '', '/');
 
         spyInitialize = jest.spyOn(app, "initialize");
         spyInitialize.mockImplementation(() => {
@@ -104,6 +105,36 @@ describe("useTeams", () => {
     it("Should create the useTeams hook with dark theme", async () => {
         const App = () => {
             const [{ inTeams, themeString }] = useTeams.useTeams({ initialTheme: "dark" });
+            return (
+                <div><div>{inTeams ? "true" : "false"}</div>,<div> {themeString}</div></div>
+            );
+        };
+
+        spyGetContext.mockImplementation(() => {
+            return Promise.resolve({
+                app: {
+                    theme: "dark"
+                },
+                page: {
+                    isFullScreen: false
+                }
+            } as Partial<app.Context>);
+        });
+
+        const { container } = render(<App />);
+
+        await waitFor(() => {
+            expect(spyInitialize).toBeCalledTimes(1);
+            expect(spyGetContext).toBeCalledTimes(1);
+        });
+
+        expect(container.textContent).toBe("true, dark");
+    });
+
+    it("Should create the useTeams hook with dark theme, based on query string", async () => {
+        window.history.pushState({}, '', '/?theme=dark');
+        const App = () => {
+            const [{ inTeams, themeString }] = useTeams.useTeams({});
             return (
                 <div><div>{inTeams ? "true" : "false"}</div>,<div> {themeString}</div></div>
             );
