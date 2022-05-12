@@ -25,7 +25,7 @@ describe("useTeams", () => {
         jest.clearAllMocks();
 
         window["microsoftTeams"] = {};
-        window.history.pushState({}, '', '/');
+        window.history.pushState({}, "", "/");
 
         spyInitialize = jest.spyOn(app, "initialize");
         spyInitialize.mockImplementation(() => {
@@ -132,7 +132,7 @@ describe("useTeams", () => {
     });
 
     it("Should create the useTeams hook with dark theme, based on query string", async () => {
-        window.history.pushState({}, '', '/?theme=dark');
+        window.history.pushState({}, "", "/?theme=dark");
         const App = () => {
             const [{ inTeams, themeString }] = useTeams.useTeams({});
             return (
