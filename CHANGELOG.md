@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changes
 
 * Removed support for Node 10.x
+* Node 12.x still available but not tested and pending removal
 * Upgraded `@microsoft/teams-js` SDK to version 2
 
 ### Deleted
