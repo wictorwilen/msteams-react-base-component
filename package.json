@@ -1,7 +1,7 @@
 {
   "name": "msteams-react-base-component",
-  "version": "4.0.0-preview.6",
-  "description": "React helper components for Microsoft Teams apps",
+  "version": "4.0.0-preview.7",
+  "description": "React helper components for Microsoft 365 Teams, Office and Outlook apps",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
   "types": "lib/cjs/index.d.ts",
@@ -39,7 +39,7 @@
   "license": "MIT",
   "devDependencies": {
     "@fluentui/react-northstar": "^0.62.0",
-    "@microsoft/teams-js": "^2.0.0-beta.6",
+    "@microsoft/teams-js": "^2.0.0",
     "@testing-library/react": "^12.1.1",
     "@types/enzyme": "^3.10.10",
     "@types/jest": "^27.0.2",
@@ -71,7 +71,7 @@
   },
   "peerDependencies": {
     "@fluentui/react-northstar": ">=0.62.0",
-    "@microsoft/teams-js": "^2.0.0-beta.6",
+    "@microsoft/teams-js": "^2.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
