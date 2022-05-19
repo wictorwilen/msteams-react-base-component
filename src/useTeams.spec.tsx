@@ -63,6 +63,41 @@ describe("useTeams", () => {
         });
     });
 
+    it("Should return not in teams - app.initialize rejects", async () => {
+        spyInitialize.mockImplementation(() => {
+            return Promise.reject(new Error(""));
+        });
+        const App = () => {
+            const [{ inTeams }] = useTeams.useTeams({});
+            return (
+                <div>{"" + inTeams}</div>
+            );
+        };
+        const { container } = render(<App />);
+        await waitFor(() => {
+            expect(spyInitialize).toBeCalledTimes(1);
+            expect(container.textContent).toBe("false");
+        });
+    });
+
+    it("Should return not in teams - app.getContext rejects", async () => {
+        spyGetContext.mockImplementation(() => {
+            return Promise.reject(new Error(""));
+        });
+        const App = () => {
+            const [{ inTeams }] = useTeams.useTeams({});
+            return (
+                <div>{"" + inTeams}</div>
+            );
+        };
+        const { container } = render(<App />);
+        await waitFor(() => {
+            expect(spyInitialize).toBeCalledTimes(1);
+            expect(spyGetContext).toBeCalledTimes(1);
+            expect(container.textContent).toBe("false");
+        });
+    });
+
     it("Should create the useTeams hook - in teams", async () => {
         const App = () => {
             const [{ inTeams, themeString }] = useTeams.useTeams({});
