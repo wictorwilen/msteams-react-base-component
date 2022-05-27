@@ -4,10 +4,16 @@
 
 import { useEffect, useState } from "react";
 import { unstable_batchedUpdates as batchedUpdates } from "react-dom";
-import * as microsoftTeams from "@microsoft/teams-js";
-import { teamsDarkTheme, teamsHighContrastTheme, teamsTheme, ThemePrepared } from "@fluentui/react-northstar";
+import type { Context } from "@microsoft/teams-js";
+import {
+    teamsDarkTheme,
+    teamsHighContrastTheme,
+    teamsTheme
+} from "@fluentui/react-northstar";
+import type { ThemePrepared } from "@fluentui/react-northstar";
 
-export const checkInTeams = (): boolean => {
+export const checkInTeams = (microsoftTeams: typeof import("@microsoft/teams-js")): boolean => {
+    if (typeof window === "undefined") return false;
     // eslint-disable-next-line dot-notation
     const microsoftTeamsLib = microsoftTeams || window["microsoftTeams"];
 
@@ -25,6 +31,7 @@ export const checkInTeams = (): boolean => {
 };
 
 export const getQueryVariable = (variable: string): string | undefined => {
+    if (typeof window === "undefined") return;
     const query = window.location.search.substring(1);
     const vars = query.split("&");
     for (const varPairs of vars) {
@@ -55,7 +62,7 @@ export function useTeams(options?: { initialTheme?: string, setThemeHandler?: (t
         fullScreen?: boolean,
         theme: ThemePrepared,
         themeString: string,
-        context?: microsoftTeams.Context
+        context?: Context
     }, {
         setTheme: (theme: string | undefined) => void
     }] {
@@ -64,7 +71,7 @@ export function useTeams(options?: { initialTheme?: string, setThemeHandler?: (t
     const [theme, setTheme] = useState<ThemePrepared>(teamsTheme);
     const [themeString, setThemeString] = useState<string>("default");
     const [initialTheme] = useState<string | undefined>((options && options.initialTheme) ? options.initialTheme : getQueryVariable("theme"));
-    const [context, setContext] = useState<microsoftTeams.Context>();
+    const [context, setContext] = useState<Context>();
 
     const themeChangeHandler = (theme: string | undefined) => {
         setThemeString(theme || "default");
@@ -88,26 +95,31 @@ export function useTeams(options?: { initialTheme?: string, setThemeHandler?: (t
         if (initialTheme) {
             overrideThemeHandler(initialTheme);
         }
-        const isInTeams = checkInTeams();
-        if (isInTeams) {
-            microsoftTeams.initialize(() => {
-                microsoftTeams.getContext(context => {
-                    batchedUpdates(() => {
-                        setInTeams(true);
-                        setContext(context);
-                        setFullScreen(context.isFullScreen);
+        // We lazy load the sdk client-side only since it uses window
+        // without checking if it exists first and would throw
+        // errors when running during SSR (for example, in next.js)
+        import("@microsoft/teams-js").then((microsoftTeams) => {
+            const isInTeams = checkInTeams(microsoftTeams);
+            if (isInTeams) {
+                microsoftTeams.initialize(() => {
+                    microsoftTeams.getContext(context => {
+                        batchedUpdates(() => {
+                            setInTeams(true);
+                            setContext(context);
+                            setFullScreen(context.isFullScreen);
+                        });
+                        overrideThemeHandler(context.theme);
                     });
-                    overrideThemeHandler(context.theme);
+                    microsoftTeams.registerFullScreenHandler((isFullScreen) => {
+                        setFullScreen(isFullScreen);
+                    });
+                    microsoftTeams.registerOnThemeChangeHandler(overrideThemeHandler);
                 });
-                microsoftTeams.registerFullScreenHandler((isFullScreen) => {
-                    setFullScreen(isFullScreen);
-                });
-                microsoftTeams.registerOnThemeChangeHandler(overrideThemeHandler);
-            });
-        } else {
-            setInTeams(false);
-            microsoftTeams.initialize();
-        }
+            } else {
+                setInTeams(false);
+                microsoftTeams.initialize();
+            }
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
