@@ -6,13 +6,15 @@
 [![GitHub issues](https://img.shields.io/github/issues/wictorwilen/msteams-react-base-component.svg)](https://github.com/wictorwilen/msteams-react-base-component/issues)
 [![GitHub closed issues](https://img.shields.io/github/issues-closed/wictorwilen/msteams-react-base-component.svg)](https://github.com/wictorwilen/msteams-react-base-component/issues?q=is%3Aissue+is%3Aclosed)
 
-This is a React hook based on the Microsoft Teams JavaScript SDK and the Fluent UI components, which is used when generating Microsoft Teams Apps using the [Microsoft Teams Yeoman Generator](https://aka.ms/yoteams).
+This is a set of React hooks and providers based on the Microsoft Teams JavaScript SDK, the Fluent UI components and Microsoft Graph Toolkit, which is used when generating Microsoft Teams Apps using the [Microsoft Teams Yeoman Generator](https://aka.ms/yoteams).
 
  | @master | @preview |
  :--------:|:---------:
  ![Build Status](https://img.shields.io/github/workflow/status/wictorwilen/msteams-react-base-component/msteams-react-base-component%20CI/master)|![Build Status](https://img.shields.io/github/workflow/status/wictorwilen/msteams-react-base-component/msteams-react-base-component%20CI/preview)
 
-## Usage
+# Usage
+
+## `useTeams` hook
 
 To use this package in a Teams tab or extension import the `useTeams` Hook and then call it inside a functional component.
 
@@ -22,7 +24,7 @@ const [{inTeams}] = useTeams();
 
 The `useTeams` hook will return a tuple of where an object of properties are in the first field and an object of methods in the second.
 
-> **NOTE**: using the hook will automatically call `microsoftTeams.initialize()` and `microsoftTeams.getContext()` if the Microsoft Teams JS SDK is available.
+> **NOTE**: using the hook will automatically initialize the Microsoft Teams JS SDK is available.
 
 ### useTeams Hook arguments
 
@@ -41,7 +43,7 @@ The `useTeams` hook can take an *optional* object argument:
 | `fullScreen` | boolean? | `true` if the Tab is in full-screen, otherwise `false` |
 | `themeString` | string | The value of `default`, `dark` or `contrast` |
 | `theme` | ThemePrepared | The Fluent UI Theme object for the current theme |
-| `context` | `microsoftTeams.Context?` | `undefined` while the Tab is loading or if not hosted in Teams, set to a value once the Tab is initialized and context available |
+| `context` | `Context?` | `undefined` while the Tab is loading or if not hosted in Teams, set to a value once the Tab is initialized and context available |
 
 ### Available methods
 
@@ -88,15 +90,7 @@ export const HooksTab = () => {
 };
 ```
 
-### Additional helper methods
-
-The package also exports two helper methods, both used internally by the `useTeams` hook.
-
-`getQueryVariable(name: string): string` - returns the value of the query string variable identified by the name.
-
-`checkInTeams(): boolean` - returns true if hosted inside Microsoft Teams.
-
-## License
+# License
 
 Copyright (c) Wictor Wilén. All rights reserved.
 

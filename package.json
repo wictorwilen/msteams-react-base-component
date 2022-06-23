@@ -1,7 +1,7 @@
 {
   "name": "msteams-react-base-component",
-  "version": "3.1.1",
-  "description": "React helper components for Microsoft Teams apps",
+  "version": "4.0.0",
+  "description": "React helper components for Microsoft 365 Teams, Office and Outlook apps",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
   "types": "lib/cjs/index.d.ts",
@@ -17,7 +17,8 @@
     "microsoft-teams",
     "msteams",
     "typescript",
-    "fluentui"
+    "fluentui",
+    "mgt"
   ],
   "author": "Wictor Wilén (wictor@wictorwilen.se)",
   "maintainers": [
@@ -37,38 +38,45 @@
   "homepage": "https://github.com/wictorwilen/msteams-react-base-component",
   "license": "MIT",
   "devDependencies": {
-    "@fluentui/react-northstar": "^0.51.0",
-    "@microsoft/teams-js": "^1.8.0",
+    "@fluentui/react-northstar": "^0.62.0",
+    "@microsoft/teams-js": "^2.0.0",
     "@testing-library/react": "^12.1.1",
-    "@types/enzyme": "^3.10.9",
+    "@types/enzyme": "^3.10.10",
     "@types/jest": "^27.0.2",
     "@types/react": "^16.9.56",
     "@types/react-dom": "^16.8.4",
-    "@typescript-eslint/eslint-plugin": "^4.32.0",
-    "@typescript-eslint/parser": "^4.32.0",
-    "eslint": "^7.32.0",
-    "eslint-config-standard": "^16.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.11.0",
+    "@typescript-eslint/parser": "^5.11.0",
+    "eslint": "^8.15.0",
+    "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.24.2",
-    "eslint-plugin-jest": "^24.4.2",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-jest": "^26.1.0",
+    "eslint-plugin-n": "^15.2.0",
+    "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.26.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "eslint-plugin-standard": "^5.0.0",
-    "jest": "^27.2.3",
-    "jest-junit": "^12.3.0",
-    "mocha": "^9.1.2",
+    "jest": "^28.1.0",
+    "jest-environment-jsdom": "^28.1.0",
+    "jest-junit": "^13.0.0",
+    "mocha": "^10.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "rimraf": "^3.0.2",
-    "ts-jest": "^27.0.5",
+    "scheduler": "^0.20.2",
+    "ts-jest": "^28.0.2",
     "typescript": "^4.4.3"
   },
+  "dependencies": {
+    "jwt-decode": "^3.1.2"
+  },
   "peerDependencies": {
-    "@fluentui/react-northstar": ">0.51.0",
-    "@microsoft/teams-js": "^1.8.0",
+    "@fluentui/react-northstar": ">=0.62.0",
+    "@microsoft/teams-js": "^2.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
+  },
+  "engines": {
+    "node": ">=12.22.0"
   },
   "funding": {
     "type": "individual",

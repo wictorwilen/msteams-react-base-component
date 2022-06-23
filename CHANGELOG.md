@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## [*4.0.0*] - <*2022-06-23*>
+
+### Changes
+
+* Removed support for Node 10.x
+* Node 12.x still available but not tested and pending removal
+* Upgraded `@microsoft/teams-js` SDK to version 2
+
+### Deleted
+
+* Deleted the `checkInTeams` helper method
+* Deleted the `getQueryVariable` helper method
+
 ## [*3.1.1*] - <*2021-09-30*>
 
 ### Changes

@@ -1,6 +1,6 @@
 name: msteams-react-base-component CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -9,17 +9,22 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x, 15.x, 16.x]
+        node-version: [14.x, 15.x, 16.x, 18.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm install
-    - run: npm run lint
-    - run: npm run test
-    - run: npm run build
-      env:
-        CI: true
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm run lint
+      - run: npm run test
+      - uses: codecov/codecov-action@v2
+        with:
+          directory: ./coverage
+          flags: unittests 
+          fail_ci_if_error: true
+      - run: npm run build
+        env:
+          CI: true
