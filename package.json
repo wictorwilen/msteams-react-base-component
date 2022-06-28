@@ -1,6 +1,6 @@
 {
   "name": "msteams-react-base-component",
-  "version": "4.0.1-preview",
+  "version": "4.0.1",
   "description": "React helper components for Microsoft 365 Teams, Office and Outlook apps",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
