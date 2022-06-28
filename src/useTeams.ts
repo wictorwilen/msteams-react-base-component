@@ -7,16 +7,6 @@ import { unstable_batchedUpdates as batchedUpdates } from "react-dom";
 import { app, pages } from "@microsoft/teams-js";
 import { teamsDarkTheme, teamsHighContrastTheme, teamsTheme, ThemePrepared } from "@fluentui/react-northstar";
 
-const isTeamsLibraryLoaded = (): boolean => {
-    // eslint-disable-next-line dot-notation
-    const microsoftTeamsLib = window["microsoftTeams"];
-
-    if (!microsoftTeamsLib) {
-        return false; // the Microsoft Teams library is for some reason not loaded
-    }
-    return true;
-};
-
 const getTheme = (): string | undefined => {
     const urlParams = new URLSearchParams(window.location.search);
     const theme = urlParams.get("theme");
@@ -74,28 +64,25 @@ export function useTeams(options?: { initialTheme?: string, setThemeHandler?: (t
         // set initial theme based on options or query string
         overrideThemeHandler(initialTheme);
 
-        if (isTeamsLibraryLoaded()) {
-            app.initialize().then(() => {
-                app.getContext().then(context => {
-                    batchedUpdates(() => {
-                        setInTeams(true);
-                        setContext(context);
-                        setFullScreen(context.page.isFullScreen);
-                    });
-                    overrideThemeHandler(context.app.theme);
-                    app.registerOnThemeChangeHandler(overrideThemeHandler);
-                    pages.registerFullScreenHandler((isFullScreen) => {
-                        setFullScreen(isFullScreen);
-                    });
-                }).catch(() => {
-                    setInTeams(false);
+        app.initialize().then(() => {
+            app.getContext().then(context => {
+                batchedUpdates(() => {
+                    setInTeams(true);
+                    setContext(context);
+                    setFullScreen(context.page.isFullScreen);
+                });
+                overrideThemeHandler(context.app.theme);
+                app.registerOnThemeChangeHandler(overrideThemeHandler);
+                pages.registerFullScreenHandler((isFullScreen) => {
+                    setFullScreen(isFullScreen);
                 });
             }).catch(() => {
                 setInTeams(false);
             });
-        } else {
+        }).catch(() => {
             setInTeams(false);
-        }
+        });
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

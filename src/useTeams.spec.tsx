@@ -24,7 +24,6 @@ describe("useTeams", () => {
         jest.resetAllMocks();
         jest.clearAllMocks();
 
-        window["microsoftTeams"] = {};
         window.history.pushState({}, "", "/");
 
         spyInitialize = jest.spyOn(app, "initialize");
@@ -43,23 +42,6 @@ describe("useTeams", () => {
                     isFullScreen: false
                 }
             } as Partial<app.Context>);
-        });
-    });
-
-    it("Should create the useTeams hook - empty by default", async () => {
-        const App = () => {
-            const [{ inTeams }] = useTeams.useTeams({});
-            return (
-                <div>{"" + inTeams}</div>
-            );
-        };
-
-        window["microsoftTeams"] = undefined;
-
-        const { container } = render(<App />);
-        await waitFor(() => {
-            expect(spyInitialize).toBeCalledTimes(0);
-            expect(container.textContent).toBe("false");
         });
     });
 
@@ -116,25 +98,6 @@ describe("useTeams", () => {
         });
 
         expect(container.textContent).toBe("true, default");
-    });
-
-    it("Should create the useTeams hook - not in teams", async () => {
-        const App = () => {
-            const [{ inTeams, themeString }] = useTeams.useTeams({});
-            return (
-                <div><div>{inTeams ? "true" : "false"}</div>,<div> {themeString}</div></div>
-            );
-        };
-
-        window["microsoftTeams"] = undefined;
-
-        const { container } = render(<App />);
-
-        await waitFor(() => {
-            expect(spyInitialize).toBeCalledTimes(0);
-        });
-
-        expect(container.textContent).toBe("false, default");
     });
 
     it("Should create the useTeams hook with dark theme", async () => {
